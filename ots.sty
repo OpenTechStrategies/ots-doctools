@@ -1,0 +1,104 @@
+% OTS Latex package
+% 
+% Copyright 2016 Open Tech Strategies
+%
+%% This program can be redistributed and/or modified under the terms
+%% of the LaTeX Project Public License Distributed from CTAN archives
+%% in directory macros/latex/base/lppl.txt.
+% 
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{ots}
+  [2016/09/01 v0.01 LaTeX package for consistent OTS docs]
+
+% Text replace command \replace.  JV cargo culted it from
+% http://tex.stackexchange.com/questions/213947/how-to-replace-text
+\usepackage{xparse}
+\ExplSyntaxOn
+\NewDocumentCommand{\replace}{mmm}
+ {
+  \marian_replace:nnn {#1} {#2} {#3}
+ }
+
+\tl_new:N \l_marian_input_text_tl
+
+\cs_new_protected:Npn \marian_replace:nnn #1 #2 #3
+ {
+  \tl_set:Nn \l_marian_input_text_tl { #1 }
+  \tl_replace_all:Nnn \l_marian_input_text_tl { #2 } { #3 }
+  \tl_use:N \l_marian_input_text_tl
+ }
+\ExplSyntaxOff
+\usepackage{xspace} 
+
+% This allows urls to linebreak in footnotes.  It uses the above replace routine.
+\newcommand{\otsurl}[1]{%
+  \textit{\href{#1}{\replace{#1}{/}{/\allowbreak }}}\xspace}
+% This allows file paths to linebreak on slashes, even in footnotes. It uses the above replace routine.
+\newcommand{\filespec}[1]{%
+  \textit{\href{}{\replace{#1}{/}{/\allowbreak }}}\xspace}
+
+% Use this for including source references that you don't want to
+% include in the output, for example the unique codes used by
+% `ots-set-ref' and `ots-find-ref' from ${OTSDIR}/utils/ots.el.
+%
+% This is just to quickly preserve traceability while writing; later,
+% we might convert some of these references to reader-visible form,
+% but that would usually also involve first making an appendix
+% containing the relevant interview notes (which would therefore need
+% to be scrubbed for confidentiality) and having a citation format.
+% None of that is handled by this command.  All this command does is
+% enable us to keep track of where a piece of information came from,
+% with a minimum of interference to the flow of writing process.
+%
+% (See also the setting of `ots-ref-root' at the bottom of the .ltx
+% file under "Local Variables", which makes `ots-find-ref' work here.)
+\newcommand{\otsref}[1]{}
+
+% Use one or the other version of this command for citations to other
+% documents.  The \otsciteid variant is for citations involving some
+% kind of unique identifier (e.g., like for the document inventory in
+% ../../clients/hhs/cms/psm/approaches/deliverables/psm-approaches.ltx).
+%
+% Note: I thought that LaTeX supported command overloading, so that
+% one could just distinguish between two versions of \otscite based on
+% the number of arguments supplied.  But apparently that doesn't work,
+% so the other one is \otsciteid.
+\newcommand{\otscite}[1]{\emph{``#1''}}
+\newcommand{\otsciteid}[2]{\emph{``#1'' (#2)}}
+
+% Use this for the first mention of a thing.
+\newcommand{\otsfirstterm}[1]{\textbf{#1}}
+
+% Use this for foreign (e.g., Latin) phrases.
+\newcommand\foreignphrase[1]{\textit{#1}}
+
+% Use this to create a paragraph with wide left and right margins,
+% so that it looks prominently offset compared to the paragraphs
+% above and below it.
+\newcommand{\otsoffsetpara}[1]{%
+  % http://texblog.net/latex-archive/uncategorized/changing-margins-paragraph/
+  \begingroup
+  \leftskip4em
+  \rightskip\leftskip
+  #1
+  \par
+  \endgroup
+}
+
+% Define a sidebar environment
+\usepackage[framemethod=TikZ]{mdframed}
+\newcounter{sidebar}
+\newmdenv[%
+    backgroundcolor=black!2,
+    linecolor=black,
+    outerlinewidth=1pt,
+    roundcorner=2mm,
+    skipabove=\baselineskip,
+    skipbelow=\baselineskip,
+    settings={\global\refstepcounter{sidebar}},
+    frametitlefont=\bfseries{},
+]{sidebar}
+
+\endinput
+%%
+%% End of file `ots.sty'.
