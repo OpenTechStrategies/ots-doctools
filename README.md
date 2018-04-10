@@ -15,11 +15,29 @@ difficulty doing so.
 
 To use the OTS specific commands, include `\usepackage{ots}` in the
 header of your document and make sure that your LaTeX doc can find
-`ots.sty`.
+`ots.sty`.  The easiest way to do this is by running the following
+commands in this repository:
 
-TODO: We recommend adding `otsltxsetup` to your PATH.  This will
-symlink the `Makefile` and `ots.sty` from the specified location of this
-repository to the directory in which you ran `otsltxsetup`.
+    # create an environment variable pointing to the location of this
+    # repository
+    $ OTSLTXDIR={THIS_LOCATION}
+    $ export OTSLTXDIR
+
+    # add `otsltxsetup` to your PATH (optional, but makes things easier)
+    $ PATH=$PATH:$OTSLTXDIR
+    $ export PATH
+
+    # go to the directory where you want to `make` a ltx file
+    $ cd {YOUR LTX DIRECTORY}
+
+    # set up the OTS ltx infrastructure
+    $ otsltxsetup
+
+    # add \usepackage{ots} to the header of your .ltx document
+
+    # make the PDF
+    $ make {YOUR LTX FILE, NO ENDING}.pdf
+
 
 Probable OTS-specific things:
 

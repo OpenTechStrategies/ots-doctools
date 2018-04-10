@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# Copyright 2018 Open Tech Strategies
+#
+# Set up the OTS LaTeX infrastructure in the directory where you run
+# this script.  You will need to set `OTSLTXDIR` to the location of the
+# `otsltxsetup` repository on your machine -- see the README.
+#
+# Run like `./otsltxsetup` in the desired LaTeX directory.
+
+ln -s $OTSLTXDIR/Makefile .
+ln -s $OTSLTXDIR/ots.sty .
+
+# TODO: In the future, I'd like to be able to set OTSLTXDIR and the
+# destination dir as command line arguments.
