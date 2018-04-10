@@ -1,0 +1,204 @@
+\documentclass[12pt]{otsreport}
+
+% Uncomment the following line to disable hyphenation.
+%\usepackage[none]{hyphenat}
+
+\usepackage{ots} 
+\usepackage{amsmath}
+\usepackage{setspace}  % to control TOC spacing
+
+% For coloring individual cells in tables.
+\usepackage[table]{xcolor}
+% Define colors used in this document here.  latexcolor.com may help.
+\definecolor{tableheader}{rgb}{0.6, 0.73, 0.89}
+\definecolor{rowheaderleft}{rgb}{0.63, 0.79, 0.95}
+\definecolor{plainwhite}{rgb}{1, 1, 1}
+% Some good blue-y colors Karl found, FWIW:
+%
+%   Eton blue             #96C8A2       {0.59, 0.78, 0.64}
+%   Carolina blue         #99BADD       {0.6, 0.73, 0.89}
+%   Baby blue eyes        #A1CAF1       {0.63, 0.79, 0.95}
+%
+% Less sure about these green ones, but they might work together:
+% 
+%   Moss green            #ADDFAD       {0.68, 0.87, 0.68}
+%   Olivine               #9AB973       {0.6, 0.73, 0.45}
+%   Turquoise green       #A0D6B4       {0.63, 0.84, 0.71}
+
+% Without this, a multiline footnote has its first line (including the
+% footnote's identifying number) indented by quite a bit inside the
+% margin, but then subsequent lines start at the margin, which just
+% looks weird IMHO.  With this, the numbers start at the margin, and
+% all the lines of text line up with each other, indented slightly.
+% 
+% See https://www.ctan.org/pkg/footmisc?lang=en
+\usepackage[hang,flushmargin]{footmisc}
+
+\usepackage{ifxetex,ifluatex}
+\ifxetex
+  \usepackage{fontspec,xltxtra,xunicode}
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+\else
+  \ifluatex
+    \usepackage{fontspec}
+    \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \else
+    \usepackage[utf8]{inputenc}
+  \fi
+\fi
+
+\newenvironment{absolutelynopagebreak}
+  {\par\nobreak\vfil\penalty0\vfilneg
+   \vtop\bgroup}
+  {\par\xdef\tpd{\the\prevdepth}\egroup
+   \prevdepth=\tpd}
+
+% This TOC depth causes the table of contents to provide a high-level
+% overview of the document, instead of distracting the reader with
+% subsection titles and such.
+\setcounter{tocdepth}{1}
+
+\usepackage{enumerate}
+\usepackage{enumitem}
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\hypersetup{breaklinks=true, pdfborder={0 0 0}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{7pt plus 2pt minus 1pt}
+\setcounter{secnumdepth}{0}
+
+\usepackage[margin=1in]{geometry}
+
+\usepackage{changepage}
+
+\usepackage{hyperref}
+\usepackage{mdframed} % For an inset box of text
+
+% For logo and accompanying contact info.
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{color}
+\definecolor{dkgreen}{RGB}{50, 109, 72}
+\definecolor{dkergreen}{RGB}{0, 100, 0}
+\DeclareFixedFont{\viiisf}{OT1}{cmss}{m}{n}{8}
+\newcommand{\circlesep}{\raisebox{1.7em}{\hspace{1.8em}\includegraphics[clip, trim=0cm 11cm 19.3cm 11cm, scale=0.05]{otslogo.pdf}\hspace{1.8em}}}
+
+% Use these (instead of \section) to make a top-level section for
+% which numbering is on or off, respectively.  For most of the
+% sections, numbering should be on, but for a few it should be off.
+%
+% For appendices, use \appdxsection.  For Appendix sub and subsubs,
+% use appdxsubsection and appdxsubsubsection.
+\newcommand{\unnumberedsection}[1]{%
+  % \newpage
+  \setcounter{secnumdepth}{-1}\section{#1}}
+\newcommand{\numberedsection}[1]{%
+  % \newpage
+  \setcounter{secnumdepth}{3}\section{#1}}
+
+\newcommand{\appdxsection}[1]{%
+  % Save existing section format
+  \let\oldthesection\thesection
+
+  % Create a subsection line in the doc and establish the name of the
+  % section for label purposes, but don't put it in the TOC
+  \renewcommand{\thesection}{Appendix \Alph{section}}
+  \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+  \hypersetup{bookmarksdepth=0}
+  \section{#1}
+  \hypersetup{bookmarksdepth=4}
+  \addtocontents{toc}{\protect\setcounter{tocdepth}{4}}
+
+  % Manually make a line for the TOC without the "Appendix" bit in
+  \addcontentsline{toc}{section}{\hspace{0.2em}\thesection\hspace{0.5em}#1}
+  %\addcontentsline{toc}{subsubsection}{\parbox{0.45in}{\hfill\thesubsubsection}\hspace{1em}#1\Dotfill\hspace{0.35em}}
+
+  % Restore normal section format
+  \let\thesection\oldthesection
+}
+
+\newcommand{\appdxsubsection}[1]{%
+  % Save existing section format
+  \let\oldthesection\thesection
+
+  % Create a subsection line in the doc and establish the name of the
+  % section for label purposes, but don't put it in the TOC
+  \renewcommand{\thesection}{Appendix \Alph{section}}
+  \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+  \hypersetup{bookmarksdepth=0}
+  \subsection{#1}
+  \hypersetup{bookmarksdepth=4}
+  \addtocontents{toc}{\protect\setcounter{tocdepth}{4}}
+
+  % Manually make a line for the TOC without the "Appendix" bit in
+  \renewcommand{\thesection}{\Alph{section}}
+  \addcontentsline{toc}{subsection}{\thesubsection\hspace{0.5em}#1}
+
+  % Restore normal section format
+  \let\thesection\oldthesection
+}
+\newcommand{\appdxsubsubsection}[1]{%
+  % Save existing section format
+  \let\oldthesection\thesection
+
+  % Create a subsection line in the doc and establish the name of the
+  % section for label purposes, but don't put it in the TOC
+  \renewcommand{\thesection}{Appendix \Alph{section}}
+  \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+  \hypersetup{bookmarksdepth=0}
+  \subsubsection{#1}
+  \hypersetup{bookmarksdepth=4}
+  \addtocontents{toc}{\protect\setcounter{tocdepth}{4}}
+
+  % Manually make a line for the TOC without the "Appendix" bit in
+  \renewcommand{\thesection}{\Alph{section}}
+  \addcontentsline{toc}{subsubsection}{\hspace{0.2em}\thesubsubsection\hspace{0.5em}#1}
+  %\addcontentsline{toc}{subsubsection}{\parbox{0.45in}{\hfill\thesubsubsection}\hspace{1em}#1\Dotfill\hspace{0.35em}}
+
+  % Restore normal section format
+  \let\thesection\oldthesection
+}
+
+% Use this to refer to a [sub[sub]]section from elsewhere, 
+% assuming you want to include both its number and its name.
+\newcommand{\fullref}[1]{%
+  \ref{#1}~``\nameref{#1}''}
+
+% Rename the table of contents label
+\renewcommand*\contentsname{\vspace{-1em}}
+
+\begin{document}
+
+\otsheader
+
+\begin{center}
+\LARGE{Title of Report: \\
+  And a Subtitle}
+
+\vspace{.5em}
+
+\normalsize{A date}
+\end{center}
+
+% The grouping with the \addtocontents and \addvspace bits below are
+% to reduce the vertical spacing in the TOC.  More information here:
+% https://tex.stackexchange.com/questions/111243/lyx-reduce-spacing-in-toc
+\begingroup
+% \addtocontents{toc}{\protect\setstretch{0.80}}
+% \def\addvspace#1{}
+\tableofcontents
+\endgroup
+
+\newpage
+
+\unnumberedsection{Introduction}\label{overview}
+\unnumberedsection{Conclusion}\label{conclusion}
+
+
+\end{document}
