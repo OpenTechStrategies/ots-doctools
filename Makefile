@@ -1,5 +1,6 @@
-# 
-# You'll need at least the 'pdflatex' tool installed.
+# LaTeX Makefile
+#
+# You'll need at least the pdflatex and latexmk tools installed.
 
 # Note that 'make VIEW=true all' will build the pdf and then try to
 # open a pdf viewer.  This is a convenience target and if it doesn't
@@ -72,12 +73,6 @@ all-drafts:
 %.pdf: %.ltx
 	@latexmk -pdf -halt-on-error $<
 
-%.xml: %.ltx
-	@latexmk -pdflatex=lualatex --jobname="$(shell basename $< .ltx).xml" -pdf -halt-on-error $<
-	@pdftotext -layout -nopgbrk "$(shell basename $< .ltx).xml.pdf" "$(shell basename $< .ltx).xml"
-	@sed -i 's/”/"/' "$(shell basename $< .ltx).xml"
-	@sed -i 's/”/"/' "$(shell basename $< .ltx).xml"
-
 ifeq ("$(VIEW)","true")
 	$(OTSDIR)/utils/mailcap-open $@
 endif
@@ -126,3 +121,4 @@ clean: clean_latex
 
 # Don't delete intermediate files
 .SECONDARY:
+
