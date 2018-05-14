@@ -13,33 +13,34 @@ difficulty doing so.
 
 ## Usage
 
-To use the OTS specific commands, include `\usepackage{ots}` in the
-header of your document and make sure that your LaTeX doc can find
-`ots.sty`.  The easiest way to do this is by running the following
-commands in this repository:
+If you are building a document from an OTS repository, the Makefile
+that came with that document should either find your installation of
+otsltx or do a hyperlocal install in a subdir of that document's
+directory.  The doc should build smoothly from there based on the
+doc-specific makefile in the document's repository.
 
-    # create an environment variable pointing to the location of this
-    # repository
-    $ OTSLTXDIR={THIS_LOCATION}
-    $ export OTSLTXDIR
+If you are starting your own document and want to rely on OTS
+materials to do that (e.g. if you are an OTS staffer), copy the
+Makefile.docspecific in this directory to your document directory (or
+link to it) and rename it to Makefile.  `make` should do a hyperlocal
+install if needed.  You can edit that copy of the Makefile to suit
+your document's needs.
 
-    # add `otsltxsetup` to your PATH (optional, but makes things easier)
-    $ PATH=$PATH:$OTSLTXDIR
-    $ export PATH
+If you want to install these materials widely so your user can access
+them and you don't have to manage this as a submodule (highly
+recommended if, for example, you're on subversion and not git), you
+will need to do the kpathsea and texmfhome fiddling specified in the
+comments in Makefile.  TODO: document that install process here.
 
-    # go to the directory where you want to `make` a ltx file
-    $ cd {YOUR LTX DIRECTORY}
+## Windows
 
-    # set up the OTS ltx infrastructure
-    $ otsltxsetup
+Linux and OS X should generally do the right thing with these
+materials.  We have not yet documented how to set this up on Windows
+because we haven't tried to do that setup.  If you're on Windows,
+please let us know how it goes and hjow we can improve these
+materials.
 
-    # add \usepackage{ots} to the header of your .ltx document
-
-    # make the PDF
-    $ make {YOUR LTX FILE, NO ENDING}.pdf
-
-
-Probable OTS-specific things:
+## OTS-specific matters
 
 - OTSDIR: This reference to our home Subversion directory is only
   necessary to find the relevant revision for drafts.  Not having an
