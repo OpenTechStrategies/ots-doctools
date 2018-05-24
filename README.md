@@ -15,7 +15,7 @@ difficulty doing so.
 
 If you are building a document from an OTS repository, the Makefile
 that came with that document should either find your installation of
-otsltx or do a hyperlocal install in a subdir of that document's
+ots-doctools or do a hyperlocal install in a subdir of that document's
 directory.  The doc should build smoothly from there based on the
 doc-specific makefile in the document's repository.
 
