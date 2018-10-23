@@ -107,15 +107,21 @@ clean_latex:
 # However, when a series of PDFs ordered by revision number (e.g.,
 # "foo-r1729.pdf", etc) is present, remove all but the most recent.
 clean: clean_latex
-	@(find . -maxdepth 1 -regex '.*-r[0-9]+\.pdf' -print             \
-            | sort > $$-rev-pdfs.tmp;                                    \
-          cat $$-rev-pdfs.tmp | sort | tail -1 > $$-rev-pdf-to-save.tmp; \
-          mv `cat $$-rev-pdf-to-save.tmp` fish;                          \
-          rm -f `cat $$-rev-pdfs.tmp`;                                   \
-          mv fish `cat $$-rev-pdf-to-save.tmp`;                          \
-          rm $$-rev-pdfs.tmp;                                            \
-          rm $$-rev-pdf-to-save.tmp;)
-
+	@(find . -maxdepth 1 -regex '.*-r[0-9]+\.pdf' -print                  \
+            | sort > $$$$-rev-pdfs.tmp;                                       \
+          cat $$$$-rev-pdfs.tmp | sort | tail -1 > $$$$-rev-pdf-to-save.tmp;  \
+          if [ `wc -l $$$$-rev-pdf-to-save.tmp | cut -d " " -f 1` != "0" ];   \
+          then                                                                \
+            mv `cat $$$$-rev-pdf-to-save.tmp` $$$$-fish;                      \
+          fi;                                                                 \
+          rm -f `cat $$$$-rev-pdfs.tmp`;                                      \
+          if [ `wc -l $$$$-rev-pdf-to-save.tmp | cut -d " " -f 1` != "0" ];   \
+          then                                                                \
+            mv $$$$-fish `cat $$$$-rev-pdf-to-save.tmp`;                      \
+          fi;                                                                 \
+          rm $$$$-rev-pdfs.tmp;                                               \
+          rm $$$$-rev-pdf-to-save.tmp;                                        \
+        )
 	@if [ -s "latex2docx" ]; then rm -f latex2docx; fi
 	@if [ -s "latex2odt" ]; then rm -f latex2odt; fi
 
