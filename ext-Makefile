@@ -1,0 +1,14 @@
+#!/bin/sh
+
+.PHONY: default
+
+%:
+	@if [ "${OTS_DOCTOOLS_DIR}X" = "X" ]; then                                   \
+           echo "";                                                                  \
+           echo "ERROR: Your OTS_DOCTOOLS_DIR environment variable is not set up.";  \
+           echo "       https://github.com/OpenTechStrategies/ots-doctools/ has";    \
+           echo "       information on how to build OTS documents.";                 \
+           echo "";                                                                  \
+         else                                                                        \
+           make -s -f ${OTS_DOCTOOLS_DIR}/Makefile $@;                               \
+         fi                                                                          \
