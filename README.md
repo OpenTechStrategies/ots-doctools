@@ -5,7 +5,7 @@ published documents from their source files.  Most of the documents
 are written in LaTeX, though we sometimes use other formats too.
 
 The expected audience is people who want to work with the source text
-for our published reports.  If you have the source repository for a given
+of our published reports.  If you have the source repository for a given
 report, and you have this infrastructure, you should be able to re-create the
 published report (usually a PDF).  Please
 [let us know](https://github.com/OpenTechStrategies/ots-doctools/issues/new) 
@@ -30,8 +30,8 @@ improving this infrastructure.
 
 * Set up the **`TEXMFHOME`** environment variable.
 
-  Set the TEXMFHOME variable so that that kpathsea can find `latex/*`.
-  For example, put
+  Set the TEXMFHOME variable so that that kpathsea can find `latex/*`
+  in this directory.  For example, put
 
         TEXMFHOME=${HOME}/texmf
         export TEXMFHOME
@@ -46,7 +46,7 @@ improving this infrastructure.
 The top-level `Makefile` in your document's source tree -- remember,
 that's a different tree from this one -- should be a copy of the file
 `ext-Makefile` here.  If you got the document tree from us, that will
-already be the case.  Then run
+already be the case.  Just run
 
       $ make
 
