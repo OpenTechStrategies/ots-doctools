@@ -10,6 +10,15 @@
 \ProvidesPackage{ots}
   [2016/09/01 v0.01 LaTeX package for consistent OTS docs]
 
+% We generally use \otsurl (which see) instead of \url.  However, we
+% make the 'url' package available just in case anyone wants it.
+% http://ctan.math.washington.edu/tex-archive/macros/latex/contrib/url/url.pdf
+\usepackage{url}
+
+% Use this to explicitly redact text (i.e., classic black bars).
+% http://tug.ctan.org/tex-archive/macros/latex/contrib/censor/censor.pdf
+\usepackage{censor}
+
 % Text replace command \replace.  JV cargo culted it from
 % http://tex.stackexchange.com/questions/213947/how-to-replace-text
 \usepackage{xparse}
