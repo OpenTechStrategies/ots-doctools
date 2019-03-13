@@ -28,7 +28,20 @@ all-drafts:
 %.ltx: %.mdwn
 	pandoc -s -f markdown -t latex -o $@ $<
 
-%.pdf: %.ltx
+# A LaTeX document may consist of multiple .ltx files all included
+# (via \input or \include) into a single master .ltx file.  But
+# tracing those dependencies here in the Makefile would be too much
+# trouble, so instead we just rebuild the requested PDF if any LaTeX
+# file in the directory changed.  That is guaranteed to be correct: it
+# may do an unnecessary rebuild, but won't skip a necessary rebuild.
+#
+# (Also, it looks like some of the LaTeX tools do dependency tracking
+# on their own anyway.  E.g. if a .ltx source file's timestamp changed
+# but no content was changed, then 'latexmk' will run very quickly:
+# it'll wake up, issue its cheery version-header greeting, realize
+# that nothing actually needs to be done, and exit.)
+LTX_SRCS := $(shell find . -name '*.ltx')
+%.pdf: %.ltx $(LTX_SRCS)
 	@latexmk -pdf -halt-on-error $<
 
 # This builds the draft.  It can handle underscores in the jobname,

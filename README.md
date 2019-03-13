@@ -48,11 +48,9 @@ that's a different tree from this one -- should be a copy of the file
 `ext-Makefile` here.  If you got the document tree from us, that will
 already be the case.  Just run
 
-      $ make
+      $ make foo.pdf
 
-to see a list of possible document-building commands.  Generally,
-`make foo.pdf` will build `foo.pdf` using `foo.ltx` as input.  For
-draft PDFs, use `make foo.draft.pdf`.
+to build `foo.pdf` from `foo.ltx`.  For draft PDFs, use `make foo.draft.pdf`.
 
 ## Windows
 
