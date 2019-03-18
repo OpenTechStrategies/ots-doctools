@@ -11,14 +11,35 @@ endif
 default: help
 
 help:
-	@echo 'You can build PDF for any document here by running "make DOCUMENT.pdf".'
-	@echo 'If you put ".draft" before the file extension, you get a version with a'
+	@echo 'Build a specific PDF here by running "make DOCUMENT_NAME.pdf".'
+	@echo 'If you put ".draft" before the file extension, you get a version with'
 	@echo 'a "DRAFT" watermark diagonally across the background of each page.'
-	@echo 'You can build all non-draft PDFs with "make all".'
-	@echo ''
-	@for name in *.ltx; do echo "  make `basename $${name} .ltx`.pdf"; done
-	@for name in *.ltx; do echo "  make `basename $${name} .ltx`.draft.pdf"; done
+	@echo 'You may be able to build all non-draft PDFs with "make all".'
+	@if [ `ls -1 *.ltx | wc -l` -lt 5 ]; then              \
+	  echo "";                                             \
+	  for name in *.ltx; do                                \
+            echo "  make `basename $${name} .ltx`.pdf";        \
+	  done;                                                \
+	  echo "";                                             \
+	  for name in *.ltx; do                                \
+	    echo "  make `basename $${name} .ltx`.draft.pdf";  \
+	  done;                                                \
+        fi	
 
+# The 'make all' and 'make all-drafts' functionality only works in
+# directories where each .ltx file corresponds to an output .pdf.
+# When there's a main .ltx file that includes lots of subsidiary
+# .ltx files (which are also present in the dir), then making 'all'
+# doesn't work because we don't know which doc is the real target.
+#
+# There are various possible solutions to this.  One is to autodetect
+# the primary .ltx files, for example by looking for certain headers
+# or by counting the number of times "\input" or "\include" appears.
+# Another way would be to have a control file ('.ots-doctools-cfg'
+# or something) that names the primary documents.
+#
+# But for now, we just punt on the whole issue.  In the 'help' rule
+# instructions above, we weasel out by saying "You may be able to..."
 all:
 	@for name in *.ltx; do $(MAKE) `basename $${name} .ltx`.pdf; done
 
