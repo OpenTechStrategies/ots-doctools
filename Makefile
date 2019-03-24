@@ -8,14 +8,18 @@ ifeq ("$(wildcard $(REVBIN))","")
 REVBIN := $(shell find . -type f -name get_revision -print -quit)
 endif
 
-default: help
+default: build-or-help
 
-help:
-	@echo 'Build a specific PDF here by running "make DOCUMENT_NAME.pdf".'
-	@echo 'If you put ".draft" before the file extension, you get a version with'
-	@echo 'a "DRAFT" watermark diagonally across the background of each page.'
-	@echo 'You may be able to build all non-draft PDFs with "make all".'
-	@if [ `ls -1 *.ltx | wc -l` -lt 5 ]; then              \
+build-or-help:
+	@if [ `ls -1 *.ltx | wc -l` = 1 ]; then                    \
+          echo "Examining '`basename *.ltx .ltx`.pdf' for build."; \
+          echo "No output means PDF is already up-to-date.";       \
+          $(MAKE) `basename *.ltx .ltx`.pdf;                       \
+        elif [ `ls -1 *.ltx | wc -l` -lt 5 ]; then                 \
+          echo 'Build a specific PDF here by running "make DOCUMENT_NAME.pdf".'        \
+          echo 'If you put ".draft" before the file extension, you get a version with' \
+          echo 'a "DRAFT" watermark diagonally across the background of each page.'    \
+          echo 'You may be able to build all non-draft PDFs with "make all".'          \
 	  echo "";                                             \
 	  for name in *.ltx; do                                \
             echo "  make `basename $${name} .ltx`.pdf";        \
