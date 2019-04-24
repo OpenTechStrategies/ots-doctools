@@ -22,6 +22,16 @@
 % http://tug.ctan.org/tex-archive/macros/latex/contrib/censor/censor.pdf
 \usepackage{censor}
 
+% See "An Acronym Environment for LaTeX 2e", by Tobias Oetiker:
+% http://ctan.mirrors.hoobly.com/macros/latex/contrib/acronym/acronym.pdf
+% 
+% Acronyms should be expanded on first use, but not after.
+\usepackage[printonlyused,withpage]{acronym}
+% One acronym bug you should know about if you're using it: If first
+% reference isn't \ac{foo} but instead \acl{foo} or similar, follow it
+% up with \label{acro:foo} or else you won't get a page number in the
+% acronyms table.
+
 % Text replace command \replace.  JV cargo culted it from
 % http://tex.stackexchange.com/questions/213947/how-to-replace-text
 \usepackage{xparse}
