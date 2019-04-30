@@ -1,0 +1,94 @@
+% OTS Sectioning LaTeX package: numbered and unnumbered sections together
+% 
+% Copyright 2019 Open Tech Strategies
+%
+%% This program can be redistributed and/or modified under the terms
+%% of the LaTeX Project Public License Distributed from CTAN archives
+%% in directory macros/latex/base/lppl.txt.
+% 
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{ots-sectioning}
+  [2016/09/01 v0.01 LaTeX package for numbered and unnumbered sections in OTS docs]
+
+% Use these (instead of \section) to make a top-level section for
+% which numbering is on or off, respectively.  For most of the
+% sections, numbering should be on, but for a few it should be off.
+%
+% For appendices, use \appdxsection.  (This is related to CAMH
+% template stuff that is too boring to go into here.)  For Appendix
+% sub and subsubs, use appdxsubsection and appdxsubsubsection.  Note
+% that the Glossary is not considered an appendix; usually the
+% Glossary is a regular \unnumberedsection.
+\newcommand{\unnumberedsection}[1]{%
+  % \newpage
+  \setcounter{secnumdepth}{-1}\section{#1}}
+\newcommand{\numberedsection}[1]{%
+  % \newpage
+  \setcounter{secnumdepth}{3}\section{#1}}
+
+\newcommand{\appdxsection}[1]{%
+  % Save existing section format
+  \let\oldthesection\thesection
+
+  % Create a subsection line in the doc and establish the name of the
+  % section for label purposes, but don't put it in the TOC
+  \renewcommand{\thesection}{Appendix \Alph{section}}
+  \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+  \hypersetup{bookmarksdepth=0}
+  \section{#1}
+  \hypersetup{bookmarksdepth=4}
+  \addtocontents{toc}{\protect\setcounter{tocdepth}{4}}
+
+  % Manually make a line for the TOC without the "Appendix" bit in
+  \addcontentsline{toc}{section}{\hspace{0.2em}\thesection\hspace{0.5em}#1}
+  %\addcontentsline{toc}{subsubsection}{\parbox{0.45in}{\hfill\thesubsubsection}\hspace{1em}#1\Dotfill\hspace{0.35em}}
+
+  % Restore normal section format
+  \let\thesection\oldthesection
+}
+
+\newcommand{\appdxsubsection}[1]{%
+  % Save existing section format
+  \let\oldthesection\thesection
+
+  % Create a subsection line in the doc and establish the name of the
+  % section for label purposes, but don't put it in the TOC
+  \renewcommand{\thesection}{Appendix \Alph{section}}
+  \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+  \hypersetup{bookmarksdepth=0}
+  \subsection{#1}
+  \hypersetup{bookmarksdepth=4}
+  \addtocontents{toc}{\protect\setcounter{tocdepth}{4}}
+
+  % Manually make a line for the TOC without the "Appendix" bit in
+  \renewcommand{\thesection}{\Alph{section}}
+  \addcontentsline{toc}{subsection}{\thesubsection\hspace{0.5em}#1}
+
+  % Restore normal section format
+  \let\thesection\oldthesection
+}
+\newcommand{\appdxsubsubsection}[1]{%
+  % Save existing section format
+  \let\oldthesection\thesection
+
+  % Create a subsection line in the doc and establish the name of the
+  % section for label purposes, but don't put it in the TOC
+  \renewcommand{\thesection}{Appendix \Alph{section}}
+  \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+  \hypersetup{bookmarksdepth=0}
+  \subsubsection{#1}
+  \hypersetup{bookmarksdepth=4}
+  \addtocontents{toc}{\protect\setcounter{tocdepth}{4}}
+
+  % Manually make a line for the TOC without the "Appendix" bit in
+  \renewcommand{\thesection}{\Alph{section}}
+  \addcontentsline{toc}{subsubsection}{\hspace{0.2em}\thesubsubsection\hspace{0.5em}#1}
+  %\addcontentsline{toc}{subsubsection}{\parbox{0.45in}{\hfill\thesubsubsection}\hspace{1em}#1\Dotfill\hspace{0.35em}}
+
+  % Restore normal section format
+  \let\thesection\oldthesection
+}
+
+\endinput
+%%
+%% End of file `ots-sectioning.sty'.
