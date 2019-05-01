@@ -18,10 +18,10 @@ build-or-help:
           echo "No output means PDF is already up-to-date.";       \
           $(MAKE) `basename *.ltx .ltx`.pdf;                       \
         elif [ `ls -1 *.ltx | wc -l` -lt 5 ]; then                 \
-          echo 'Build a specific PDF here by running "make DOCUMENT_NAME.pdf".'        \
-          echo 'If you put ".draft" before the file extension, you get a version with' \
-          echo 'a "DRAFT" watermark diagonally across the background of each page.'    \
-          echo 'You may be able to build all non-draft PDFs with "make all".'          \
+          echo 'Build a specific PDF here by running "make DOCUMENT_NAME.pdf".';        \
+          echo 'If you put ".draft" before the file extension, you get a version with'; \
+          echo 'a "DRAFT" watermark diagonally across the background of each page.';    \
+          echo 'You may be able to build all non-draft PDFs with "make all".';          \
 	  echo "";                                             \
 	  for name in *.ltx; do                                \
             echo "  make `basename $${name} .ltx`.pdf";        \
