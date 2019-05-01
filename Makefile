@@ -8,6 +8,8 @@ ifeq ("$(wildcard $(REVBIN))","")
 REVBIN := $(shell find . -type f -name get_revision -print -quit)
 endif
 
+PDFLATEX="pdflatex"
+
 default: build-or-help
 
 build-or-help:
@@ -67,7 +69,7 @@ all-drafts:
 # that nothing actually needs to be done, and exit.)
 LTX_SRCS := $(shell find . -name '*.ltx')
 %.pdf: %.ltx $(LTX_SRCS)
-	@latexmk -pdf -halt-on-error $<
+	@latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error $<
 
 # This builds the draft.  It can handle underscores in the jobname,
 # but will produce spurious "type a command or say \end" notices.
@@ -77,12 +79,12 @@ LTX_SRCS := $(shell find . -name '*.ltx')
            export SVNREVISION="$(shell $(REVBIN) $<)" ; \
            export DRAFT=yes ; \
            sed  "s/\\\getenv\\[\\\JOBNAME.*/\\\newcommand{\\\JOBNAME}{$(subst _,\\\_,$<)}/" $< | \
-	   latexmk -pdf -halt-on-error --shell-escape -jobname=$(addsuffix , $(basename $@)); \
+	   latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error --shell-escape -jobname=$(addsuffix , $(basename $@)); \
         else \
 	  export SVNREVISION="$(shell $(REVBIN) $<)" ; \
 	  export DRAFT=yes ; \
 	  export JOBNAME="$<" ; \
-	  latexmk -pdf -halt-on-error --shell-escape -jobname=$(addsuffix , $(basename $@)) $< ; \
+	  latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error --shell-escape -jobname=$(addsuffix , $(basename $@)) $< ; \
 	fi;
 	mv $(shell basename $< .ltx).draft.pdf $(shell basename $< .ltx)-$(shell $(REVBIN) $<).pdf
 	ln -sf $(shell basename $< .ltx)-$(shell $(REVBIN) $<).pdf $(shell basename $< .ltx).draft.pdf 
