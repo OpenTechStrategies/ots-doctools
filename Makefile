@@ -8,6 +8,8 @@ ifeq ("$(wildcard $(REVBIN))","")
 REVBIN := $(shell find . -type f -name get_revision -print -quit)
 endif
 
+LTX=$(wildcard *.ltx)
+
 PDFLATEX="pdflatex"
 
 default: build-or-help
@@ -67,8 +69,8 @@ all-drafts:
 # but no content was changed, then 'latexmk' will run very quickly:
 # it'll wake up, issue its cheery version-header greeting, realize
 # that nothing actually needs to be done, and exit.)
-LTX_SRCS := $(shell find . -name '*.ltx')
-%.pdf: %.ltx $(LTX_SRCS)
+LTX_SRCS := $(shell find . -name '*.ltx' ! -path './.\#*')
+%.pdf: %.ltx #$(LTX_SRCS)
 	@latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error $<
 
 # This builds the draft.  It can handle underscores in the jobname,
