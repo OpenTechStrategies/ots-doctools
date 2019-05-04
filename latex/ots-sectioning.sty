@@ -14,8 +14,8 @@
 % which numbering is on or off, respectively.  For most of the
 % sections, numbering should be on, but for a few it should be off.
 %
-% For appendices, use \appdxsection.  (This is related to CAMH
-% template stuff that is too boring to go into here.)  For Appendix
+% For appendices, use \setcounter{section}{0} and then
+% \appdxsection{Appendix Name}\label{appdx-label}.  For Appendix
 % sub and subsubs, use appdxsubsection and appdxsubsubsection.  Note
 % that the Glossary is not considered an appendix; usually the
 % Glossary is a regular \unnumberedsection.
@@ -32,7 +32,7 @@
 
   % Create a subsection line in the doc and establish the name of the
   % section for label purposes, but don't put it in the TOC
-  \renewcommand{\thesection}{Appendix \Alph{section}}
+  \renewcommand{\thesection}{Appendix \Alph{section}:}
   \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
   \hypersetup{bookmarksdepth=0}
   \section{#1}
