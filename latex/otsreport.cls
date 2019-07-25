@@ -128,27 +128,7 @@
   {\setlength{\headheight}{10pt}\setlength{\headsep}{30pt}
     \renewcommand{\@oddhead}{\usebox{\firmhead}}
   }
-
-% Some stuff for the draft version
-\usepackage{eso-pic}
-%\usepackage[yyyymmdd,hhmmss]{datetime}
-\usepackage{datetime2}
-\usepackage{catchfile}
-\newcommand{\getenv}[2][]{%
-  \CatchFileEdef{\temp}{"|kpsewhich --var-value #2"}{}%
-  \if\relax\detokenize{#1}\relax\temp\else\let#1\temp\fi}
-\getenv[\DRAFT]{DRAFT}
-\getenv[\JOBNAME]{JOBNAME}
-\getenv[\SVNREVISION]{SVNREVISION}
-\usepackage{xstring}
-
-%% If this is a draft, add a draft watermark
-\IfSubStr{\DRAFT}{yes}{
-  \usepackage{draftwatermark}
-  \SetWatermarkText{DRAFT}
-  \SetWatermarkScale{6}
-}{}
-  
+ 
 %% For reference, the 10 default LaTeX font sizes are:
 %%
 %%    \tiny

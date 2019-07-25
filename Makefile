@@ -7,10 +7,15 @@ REVBIN := $(OTS_DOCTOOLS_DIR)/get_revision
 ifeq ("$(wildcard $(REVBIN))","")
 REVBIN := $(shell find . -type f -name get_revision -print -quit)
 endif
+REVBIN := $(shell ${REVBIN})
 
 LTX=$(wildcard *.ltx)
 
 PDFLATEX="pdflatex"
+
+# This is a script that takes yaml-fronted latex and feeds it to a
+# jinja2 templating engine.  See the jinja directory for more.
+JINJIFY=${OTS_DOCTOOLS_DIR}/jinja/jinjify.py
 
 default: build-or-help
 
@@ -69,31 +74,33 @@ all-drafts:
 # but no content was changed, then 'latexmk' will run very quickly:
 # it'll wake up, issue its cheery version-header greeting, realize
 # that nothing actually needs to be done, and exit.)
-LTX_SRCS := $(shell find . -name '*.ltx' ! -path './.\#*')
-%.pdf: %.ltx Makefile #$(LTX_SRCS)
-	@latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error $<
+LTX_SRCS := $(shell find . -name dd'*.ltx' ! -path './.\#*')
+%.pdf: %.ltx Makefile venv #$(LTX_SRCS)
+	venv/bin/python3 ${JINJIFY} -o draft True $< > $(<:.ltx=.intermediate_ltx)
+	@latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error $(<:.ltx=.intermediate_ltx)
 
 # This builds the draft.  It can handle underscores in the jobname,
 # but will produce spurious "type a command or say \end" notices.
-%.draft.pdf: %.ltx Makefile
+%.draft.pdf: %.ltx Makefile venv
 	@if [ -L $(shell basename $< .ltx).draft.pdf ]; then rm $(shell basename $< .ltx).draft.pdf; fi
-	@if test $(findstring _, $<); then \
-           export SVNREVISION="$(shell $(REVBIN) $<)" ; \
-           export DRAFT=yes ; \
-           sed  "s/\\\getenv\\[\\\JOBNAME.*/\\\newcommand{\\\JOBNAME}{$(subst _,\\\_,$<)}/" $< | \
-	   latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error --shell-escape -jobname=$(addsuffix , $(basename $@)); \
-        else \
-	  export SVNREVISION="$(shell $(REVBIN) $<)" ; \
-	  export DRAFT=yes ; \
-	  export JOBNAME="$<" ; \
-	  latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error --shell-escape -jobname=$(addsuffix , $(basename $@)) $< ; \
-	fi;
-	mv $(shell basename $< .ltx).draft.pdf $(shell basename $< .ltx)-$(shell $(REVBIN) $<).pdf
-	ln -sf $(shell basename $< .ltx)-$(shell $(REVBIN) $<).pdf $(shell basename $< .ltx).draft.pdf 
+	venv/bin/python3 ${JINJIFY} -o draft True $< > $(<:.ltx=.intermediate_ltx) 
+	latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error --shell-escape $(<:.ltx=.intermediate_ltx) 
+	mv $(shell basename $< .ltx).pdf $(shell basename $< .ltx)-$(REVBIN).pdf
+	ln -sf $(shell basename $< .ltx)-$(REVBIN).pdf $(shell basename $< .ltx).draft.pdf 
+
+# OTS Doctools's Jinjify needs some python dependencies.  Not sure
+# this is the best place to do this-- it wastes diskspace and clutters
+# document dirs with a venv dir.  OTOH, it happens automatically, so
+# it's one less thing for a user to think about.
+venv:
+	virtualenv -p python3 venv
+	venv/bin/pip3 install python-frontmatter jinja2
 
 # LaTeX litters a lot
 clean_latex:
-	@latexmk -c -f $(patsubst %.yaml.ltx,%.ltx,$(wildcard *.yaml.ltx)) $(wildcard *.ltx) $(wildcard *.tex)
+	@latexmk -c -f $(wildcard *.ltx) $(wildcard *.tex)
+	@rm -f $(patsubst %.ltx,%.bbl,$(wildcard *.ltx)) 
+	@rm -f $(patsubst %.ltx,%.run.xml,$(wildcard *.ltx)) 
 
 # We don't remove .pdf files by default, even though they're generated
 # files, because in practice one usually wants to keep them around.
@@ -118,6 +125,7 @@ clean: clean_latex
         )
 	@if [ -s "latex2docx" ]; then rm -f latex2docx; fi
 	@if [ -s "latex2odt" ]; then rm -f latex2odt; fi
+	@rm -f $(patsubst %.ltx,%.intermediate_ltx,$(wildcard *.ltx)) 
 
 
 # Don't delete intermediate files
