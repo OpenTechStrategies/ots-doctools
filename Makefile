@@ -94,13 +94,13 @@ LTX_SRCS := $(shell find . -name '*.ltx' ! -path './.\#*')
 # LaTeX litters a lot
 clean_latex:
 	@latexmk -c -f $(patsubst %.yaml.ltx,%.tex,$(wildcard *.yaml.ltx)) $(wildcard *.ltx) $(wildcard *.tex)
-	@touch Makefile # force update of pdf on next make
 
 # We don't remove .pdf files by default, even though they're generated
 # files, because in practice one usually wants to keep them around.
 # However, when a series of PDFs ordered by revision number (e.g.,
 # "foo-r1729.pdf", etc) is present, remove all but the most recent.
 clean: clean_latex
+	@touch Makefile # force update of pdf on next make
 	@(find . -maxdepth 1 -regex '.*-r[0-9]+\.pdf' -print                  \
             | sort > $$$$-rev-pdfs.tmp;                                       \
           cat $$$$-rev-pdfs.tmp | sort | tail -1 > $$$$-rev-pdf-to-save.tmp;  \
