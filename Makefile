@@ -93,7 +93,8 @@ LTX_SRCS := $(shell find . -name '*.ltx' ! -path './.\#*')
 
 # LaTeX litters a lot
 clean_latex:
-	@rm -f *.fdb_latexmk *.aux *.fls *.lof *.lot *.log *.out *.toc
+	@latexmk -c -f $(patsubst %.yaml.ltx,%.tex,$(wildcard *.yaml.ltx)) $(wildcard *.ltx) $(wildcard *.tex)
+	@touch Makefile # force update of pdf on next make
 
 # We don't remove .pdf files by default, even though they're generated
 # files, because in practice one usually wants to keep them around.
