@@ -79,7 +79,10 @@ LTX_SRCS := $(shell find . -name dd'*.ltx' ! -path './.\#*')
 	venv/bin/python3 ${JINJIFY} -o draft True $< > $(<:.ltx=.intermediate_ltx)
 	@latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error $(<:.ltx=.intermediate_ltx)
 
-# This builds the draft.
+# This builds the draft.  This only works if you're using the a jinja
+# template that extends down to base.ltx.  If you're just compiling
+# straight latex, building a draft version is unsupported and leads to
+# undefined behavior.
 %.draft.pdf: %.ltx Makefile venv
 	@if [ -L $(shell basename $< .ltx).draft.pdf ]; then rm $(shell basename $< .ltx).draft.pdf; fi
 	venv/bin/python3 ${JINJIFY} -o draft True $< > $(<:.ltx=.intermediate_ltx) 
