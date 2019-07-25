@@ -93,7 +93,7 @@ LTX_SRCS := $(shell find . -name '*.ltx' ! -path './.\#*')
 
 # LaTeX litters a lot
 clean_latex:
-	@latexmk -c -f $(patsubst %.yaml.ltx,%.tex,$(wildcard *.yaml.ltx)) $(wildcard *.ltx) $(wildcard *.tex)
+	@latexmk -c -f $(patsubst %.yaml.ltx,%.ltx,$(wildcard *.yaml.ltx)) $(wildcard *.ltx) $(wildcard *.tex)
 
 # We don't remove .pdf files by default, even though they're generated
 # files, because in practice one usually wants to keep them around.
