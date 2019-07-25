@@ -70,7 +70,7 @@ all-drafts:
 # it'll wake up, issue its cheery version-header greeting, realize
 # that nothing actually needs to be done, and exit.)
 LTX_SRCS := $(shell find . -name '*.ltx' ! -path './.\#*')
-%.pdf: %.ltx #$(LTX_SRCS)
+%.pdf: %.ltx Makefile #$(LTX_SRCS)
 	@latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error $<
 
 # This builds the draft.  It can handle underscores in the jobname,
