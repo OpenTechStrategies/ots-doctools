@@ -79,8 +79,7 @@ LTX_SRCS := $(shell find . -name dd'*.ltx' ! -path './.\#*')
 	venv/bin/python3 ${JINJIFY} -o draft True $< > $(<:.ltx=.intermediate_ltx)
 	@latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error $(<:.ltx=.intermediate_ltx)
 
-# This builds the draft.  It can handle underscores in the jobname,
-# but will produce spurious "type a command or say \end" notices.
+# This builds the draft.
 %.draft.pdf: %.ltx Makefile venv
 	@if [ -L $(shell basename $< .ltx).draft.pdf ]; then rm $(shell basename $< .ltx).draft.pdf; fi
 	venv/bin/python3 ${JINJIFY} -o draft True $< > $(<:.ltx=.intermediate_ltx) 
