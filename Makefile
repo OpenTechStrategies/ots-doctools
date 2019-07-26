@@ -74,8 +74,7 @@ all-drafts:
 # but no content was changed, then 'latexmk' will run very quickly:
 # it'll wake up, issue its cheery version-header greeting, realize
 # that nothing actually needs to be done, and exit.)
-LTX_SRCS := $(shell find . -name dd'*.ltx' ! -path './.\#*')
-%.pdf: %.ltx Makefile venv #$(LTX_SRCS)
+%.pdf: %.ltx Makefile venv
 	venv/bin/python3 ${JINJIFY} -o draft True $< > $(<:.ltx=.intermediate_ltx)
 	@latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error $(<:.ltx=.intermediate_ltx)
 
