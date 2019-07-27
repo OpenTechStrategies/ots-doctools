@@ -95,7 +95,7 @@ all-drafts:
 # it's one less thing for a user to think about.
 venv:
 	virtualenv -p python3 venv
-	venv/bin/pip3 install python-frontmatter jinja2
+	venv/bin/pip3 install python-frontmatter jinja2 click
 
 # LaTeX litters a lot
 clean_latex:
