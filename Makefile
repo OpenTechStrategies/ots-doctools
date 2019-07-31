@@ -75,7 +75,7 @@ all-drafts:
 # it'll wake up, issue its cheery version-header greeting, realize
 # that nothing actually needs to be done, and exit.)
 %.pdf: %.ltx Makefile venv
-	venv/bin/python3 ${JINJIFY} -o draft True $< > $(<:.ltx=.intermediate_ltx)
+	venv/bin/python3 ${JINJIFY} $< > $(<:.ltx=.intermediate_ltx)
 	@latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error $(<:.ltx=.intermediate_ltx)
 
 # This builds the draft.  This only works if you're using the a jinja
