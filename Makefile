@@ -59,6 +59,9 @@ all:
 all-drafts:
 	@for name in *.ltx; do $(MAKE) `basename $${name} .ltx`.draft.pdf; done
 
+all-redacted:
+	@for name in *.ltx; do $(MAKE) `basename $${name} .ltx`.redacted.pdf; done
+
 %.ltx: %.mdwn
 	pandoc -s -f markdown -t latex -o $@ $<
 
@@ -75,7 +78,7 @@ all-drafts:
 # it'll wake up, issue its cheery version-header greeting, realize
 # that nothing actually needs to be done, and exit.)
 %.pdf: %.ltx Makefile venv
-	venv/bin/python3 ${JINJIFY} $< > $(<:.ltx=.intermediate_ltx)
+	venv/bin/python3 ${JINJIFY} $< --output $(<:.ltx=.intermediate_ltx)
 	@latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error $(<:.ltx=.intermediate_ltx)
 
 # This builds the draft.  This only works if you're using the a jinja
@@ -84,10 +87,20 @@ all-drafts:
 # undefined behavior.
 %.draft.pdf: %.ltx Makefile venv
 	@if [ -L $(shell basename $< .ltx).draft.pdf ]; then rm $(shell basename $< .ltx).draft.pdf; fi
-	venv/bin/python3 ${JINJIFY} -o draft True $< > $(<:.ltx=.intermediate_ltx) 
+	venv/bin/python3 ${JINJIFY} -o draft True $< --output $(<:.ltx=.intermediate_ltx) 
 	latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error --shell-escape $(<:.ltx=.intermediate_ltx) 
 	mv $(shell basename $< .ltx).pdf $(shell basename $< .ltx)-$(REVBIN).pdf
 	ln -sf $(shell basename $< .ltx)-$(REVBIN).pdf $(shell basename $< .ltx).draft.pdf 
+
+# This builds a redacted version.  It tells jinjify to look for a
+# redacted field in the YAML pre-matter.  That field should specify a
+# string or a list of strings to bleep in the output.  This only works
+# with jinjify.
+#%.redacted.pdf: %.redacted.ltx Makefile
+#	@rm -f $(shell basename $< .ltx).redacted.pdf
+
+%.redacted.ltx: %.ltx Makefile venv
+	venv/bin/python3 ${JINJIFY} -o redact True $< --output $@
 
 # OTS Doctools's Jinjify needs some python dependencies.  Not sure
 # this is the best place to do this-- it wastes diskspace and clutters
@@ -127,7 +140,7 @@ clean: clean_latex
 	@if [ -s "latex2docx" ]; then rm -f latex2docx; fi
 	@if [ -s "latex2odt" ]; then rm -f latex2odt; fi
 	@rm -f $(patsubst %.ltx,%.intermediate_ltx,$(wildcard *.ltx)) 
-
+	@rm -f *.redacted.ltx
 
 # Don't delete intermediate files
 .SECONDARY:
