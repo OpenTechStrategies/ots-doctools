@@ -13,9 +13,9 @@ LTX=$(wildcard *.ltx)
 
 PDFLATEX="pdflatex"
 
-# This is a script that takes yaml-fronted latex and feeds it to a
-# jinja2 templating engine.  See the jinja directory for more.
-JINJIFY=${OTS_DOCTOOLS_DIR}/jinja/jinjify.py
+# This is a script that takes yaml-fronted latex and runs it through
+# our pipeline.  See the ots-doctools pipeline directory for more.
+PIPELINE=${OTS_DOCTOOLS_DIR}/pipeline/pipeline.py
 
 default: build-or-help
 
@@ -78,8 +78,8 @@ all-redacted:
 # it'll wake up, issue its cheery version-header greeting, realize
 # that nothing actually needs to be done, and exit.)
 %.pdf: %.ltx Makefile venv
-	venv/bin/python3 ${JINJIFY} $< --output $(<:.ltx=.intermediate_ltx)
-	@latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error $(<:.ltx=.intermediate_ltx)
+	venv/bin/python3 ${PIPELINE} $< --output $(<:.ltx=.tex)
+	@latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error $(<:.ltx=.tex)
 
 # This builds the draft.  This only works if you're using the a jinja
 # template that extends down to base.ltx.  If you're just compiling
@@ -87,22 +87,19 @@ all-redacted:
 # undefined behavior.
 %.draft.pdf: %.ltx Makefile venv
 	@if [ -L $(shell basename $< .ltx).draft.pdf ]; then rm $(shell basename $< .ltx).draft.pdf; fi
-	venv/bin/python3 ${JINJIFY} -o draft True $< --output $(<:.ltx=.intermediate_ltx) 
+	venv/bin/python3 ${PIPELINE} -o draft True $< --output $(<:.ltx=.intermediate_ltx) 
 	latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error --shell-escape $(<:.ltx=.intermediate_ltx) 
 	mv $(shell basename $< .ltx).pdf $(shell basename $< .ltx)-$(REVBIN).pdf
 	ln -sf $(shell basename $< .ltx)-$(REVBIN).pdf $(shell basename $< .ltx).draft.pdf 
 
 # This builds a redacted version.  It tells jinjify to look for a
 # redacted field in the YAML pre-matter.  That field should specify a
-# string or a list of strings to bleep in the output.  This only works
-# with jinjify.
-#%.redacted.pdf: %.redacted.ltx Makefile
-#	@rm -f $(shell basename $< .ltx).redacted.pdf
+# string or a list of regexes to bleep in the output.
+%.redacted.ltx: %.ltx Makefile
+	rm -f $@
+	ln -s $< $@
 
-%.redacted.ltx: %.ltx Makefile venv
-	venv/bin/python3 ${JINJIFY} -o redact True $< --output $@
-
-# OTS Doctools's Jinjify needs some python dependencies.  Not sure
+# OTS Doctools's pipeline needs some python dependencies.  Not sure
 # this is the best place to do this-- it wastes diskspace and clutters
 # document dirs with a venv dir.  OTOH, it happens automatically, so
 # it's one less thing for a user to think about.
