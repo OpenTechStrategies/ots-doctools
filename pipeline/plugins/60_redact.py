@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-""" If we're making a file called foo.redacted.tex, do redactions."""
+""" If we're making a file with 'redacted' in the filename, do redactions."""
 
 import re
 
@@ -62,7 +62,7 @@ with a LaTeX function that prints a censored black box.
     return text, meta
 
 def run_p(text, meta):
-    return meta['output_filename'].endswith('.redacted.tex')
+    return 'redacted' in meta['output_filename']
 
 def run(text, meta):
     text, meta = redact(text, meta)
