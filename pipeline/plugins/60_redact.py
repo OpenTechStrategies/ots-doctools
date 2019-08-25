@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+""" If we're making a file called foo.redacted.tex, do redactions."""
+
 import re
 
 def redact(text, meta):
