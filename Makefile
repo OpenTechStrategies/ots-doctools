@@ -78,7 +78,7 @@ all-redacted:
 # it'll wake up, issue its cheery version-header greeting, realize
 # that nothing actually needs to be done, and exit.)
 %.pdf: %.ltx Makefile venv
-	venv/bin/python3 ${PIPELINE} $< --output $(<:.ltx=.tex)
+	@venv/bin/python3 ${PIPELINE} $< --output $(<:.ltx=.tex)
 	@latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error $(<:.ltx=.tex)
 
 # This builds the draft.  This only works if you're using the a jinja
@@ -96,8 +96,8 @@ all-redacted:
 # redacted field in the YAML pre-matter.  That field should specify a
 # string or a list of regexes to bleep in the output.
 %.redacted.ltx: %.ltx Makefile
-	rm -f $@
-	ln -s $< $@
+	@rm -f $@
+	@ln -s $< $@
 
 # OTS Doctools's pipeline needs some python dependencies.  Not sure
 # this is the best place to do this-- it wastes diskspace and clutters
