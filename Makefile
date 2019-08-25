@@ -13,9 +13,10 @@ LTX=$(wildcard *.ltx)
 
 PDFLATEX="pdflatex"
 
-# This is a script that takes yaml-fronted latex and runs it through
-# our pipeline.  See the ots-doctools pipeline directory for more.
-PIPELINE=${OTS_DOCTOOLS_DIR}/pipeline/pipeline.py
+# PIPELINE is a script that takes yaml-fronted latex and runs it
+# through our pipeline.  See the ots-doctools pipeline directory for
+# more.
+PIPELINE=venv/bin/python3 ${OTS_DOCTOOLS_DIR}/pipeline/pipeline.py
 
 default: build-or-help
 
@@ -78,19 +79,17 @@ all-redacted:
 # it'll wake up, issue its cheery version-header greeting, realize
 # that nothing actually needs to be done, and exit.)
 %.pdf: %.ltx Makefile venv
-	@venv/bin/python3 ${PIPELINE} $< --output $(<:.ltx=.tex)
-	@latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error $(<:.ltx=.tex)
+	@${PIPELINE} $< --output $(<:.ltx=.tex)
+	@latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error --shell-escape $(<:.ltx=.tex)
+	@mv $@ $(@:.pdf=-$(REVBIN).pdf)
+	@ln -sf $(@:.pdf=-$(REVBIN).pdf) $@
 
-# This builds the draft.  This only works if you're using the a jinja
-# template that extends down to base.ltx.  If you're just compiling
-# straight latex, building a draft version is unsupported and leads to
-# undefined behavior.
-%.draft.pdf: %.ltx Makefile venv
-	@if [ -L $(shell basename $< .ltx).draft.pdf ]; then rm $(shell basename $< .ltx).draft.pdf; fi
-	venv/bin/python3 ${PIPELINE} -o draft True $< --output $(<:.ltx=.intermediate_ltx) 
-	latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error --shell-escape $(<:.ltx=.intermediate_ltx) 
-	mv $(shell basename $< .ltx).pdf $(shell basename $< .ltx)-$(REVBIN).pdf
-	ln -sf $(shell basename $< .ltx)-$(REVBIN).pdf $(shell basename $< .ltx).draft.pdf 
+# This builds a draft.  This only works if you're using the jinja
+# template that extends down to base.ltx.  Without that, draft
+# versions are unsupported and this should have no effect.
+%.draft.ltx: %.ltx Makefile venv
+	@rm -f $@
+	@ln -s $< $@
 
 # This builds a redacted version.  It tells jinjify to look for a
 # redacted field in the YAML pre-matter.  That field should specify a
@@ -136,7 +135,9 @@ clean: clean_latex
         )
 	@if [ -s "latex2docx" ]; then rm -f latex2docx; fi
 	@if [ -s "latex2odt" ]; then rm -f latex2odt; fi
-	@rm -f $(patsubst %.ltx,%.intermediate_ltx,$(wildcard *.ltx)) 
+	@rm -f $(patsubst %.ltx,%.tex,$(wildcard *.ltx)) 
+	@rm -f $(patsubst %.ltx,%.draft.ltx,$(wildcard *.ltx)) 
+	@rm -f $(patsubst %.ltx,%.redacted.ltx,$(wildcard *.ltx)) 
 	@rm -f *.redacted.ltx
 
 # Don't delete intermediate files
