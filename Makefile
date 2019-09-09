@@ -79,8 +79,10 @@ all-redacted:
 # it'll wake up, issue its cheery version-header greeting, realize
 # that nothing actually needs to be done, and exit.)
 %.pdf: %.ltx Makefile venv
+	@rm -f $@
 	@${PIPELINE} $< --output $(<:.ltx=.tex)
 	@latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error --shell-escape $(<:.ltx=.tex)
+	@rm -f $(@:.pdf=-$(REVBIN).pdf)
 	@mv $@ $(@:.pdf=-$(REVBIN).pdf)
 	@ln -sf $(@:.pdf=-$(REVBIN).pdf) $@
 
