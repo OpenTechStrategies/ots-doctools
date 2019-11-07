@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-"""This script takes two parameters.  The first is a latex file with
-yaml frontmatter.  The body after the frontmatter is latex use as a
-jinja2 template.  We pass the yaml frontmatter to that jinja2 template
-and print the results.
+"""This plugin provides a RUN function.  It takes two parameters.  The
+first is the latex source and the second is the metadata from the yaml
+frontmatter.  We pass the yaml frontmatter to that jinja2 template and
+print the results and the unchanged metadata.
 
 """
 import os
