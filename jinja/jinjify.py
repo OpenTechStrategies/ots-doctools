@@ -25,7 +25,7 @@ for r in regex:
     regex[r] = re.compile(regex[r])
 
 def run_p(text, meta):
-    return meta != {}
+    return meta.get('legacy', '') != "legacy"
 
 
 # We're not using this func right now, but I do want to add markdown

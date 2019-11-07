@@ -52,6 +52,8 @@ def cli(filename, output, option, plugin):
     doc = frontmatter.load(filename)
     text = doc.content
     meta = doc.metadata
+    if meta=={}:
+        meta['legacy'] = "legacy"
     meta['input_filename'] = filename
     meta['output_filename'] = output
     
