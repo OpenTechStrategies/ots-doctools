@@ -52,6 +52,14 @@ already be the case.  Just run
 
 to build `foo.pdf` from `foo.ltx`.  For draft PDFs, use `make foo.draft.pdf`.
 
+## Pipeline and Plugins
+
+We have enabled the use of jinja templates.  The Makefile runs
+pipeline.py, which applies a series of plugins to the document and its
+metadata.  Each plugin must implement run(document, metadata) that
+returns doucment, metadata.  Optionally, a plugin might implement
+run_p(document, metadata) that returns true iff the plugin should run.
+
 ## Windows
 
 Linux and OS X should generally do the right thing with these
