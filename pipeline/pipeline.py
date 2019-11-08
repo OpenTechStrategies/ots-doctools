@@ -66,8 +66,9 @@ def cli(filename, output, option, plugin):
 
     plugins = get_plugins()
     for p,m in plugins.items():
-        if m.run_p(text, meta):
-           text, meta = m.run(text, meta)
+        if hasattr(m, "run_p"):
+            if m.run_p(text, meta):
+                text, meta = m.run(text, meta)
            
     if output:
         with open(output, 'w') as fh:
