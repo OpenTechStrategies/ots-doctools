@@ -86,6 +86,8 @@ all-redacted:
 	@mv $@ $(@:.pdf=-$(REVBIN).pdf)
 	@ln -sf $(@:.pdf=-$(REVBIN).pdf) $@
 
+	@cp $< $(<:.ltx=.knowngood) # for diffing broken builds to find bugs
+
 # This builds a draft.  This only works if you're using the jinja
 # template that extends down to base.ltx.  Without that, draft
 # versions are unsupported and this should have no effect.
