@@ -4,16 +4,15 @@
 
 If checks meta for a a list of vars to save under the key 'save_vars'.
 It then assembles those vars and their values into a list, adds info
-(e.g. SVN revision and git commit of the doc and doctools repo),
+(e.g. SVN revision of the doc and git commit of the doctools repo),
 renders it in YAML, appends '%' to each line, and sticks that in the
 PDF
-
-TODO: get revision and commit to add to the file
 """
 
 import os
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
+import subprocess
 from yaml import dump, load
 
 def after_p(text, meta):
@@ -34,8 +33,19 @@ def after(pdf_fname, meta):
     ## Go through saved vars and default vars, saving some and munging
     ## as needed.
     out = {}
+    get_rev = os.path.join(
+        os.path.split(os.path.split(os.path.split(__file__)[0])[0])[0],
+        "get_revision")
+    out['svn'] = subprocess.check_output(get_rev, shell=True).decode("utf-8").strip()
+    out['git'] = subprocess.check_output(
+        r"cd %s;git log -n 1 | head -n 1 | sed -re 's/(commit [0-9a-f]*) .*/\1/'" % os.path.split(__file__)[0],        
+        shell=True).decode("utf-8").strip()
+
+    ## grab the indicated vars
     for s in saved:
         out[s] = meta[s]
+
+    ## munge vars, wherever they come from    
     out['client'] = meta.get('client', "")
     if out['client'].startswith(r"\ac{"):
         out['client'] = out['client'][4:-1]
@@ -45,6 +55,8 @@ def after(pdf_fname, meta):
     out['input_filename'] = meta.get('input_filename', "")
     if os.path.exists(out['input_filename']):
         out['input_filename'] = os.path.abspath(out['input_filename'])
+
+    ## Reformat as a commented-out YAML block
     out = (
         "%%% BEGIN OTS YAML BLOCK %%%\n" +
         "% " + "\n% ".join(dump(out).split("\n"))[:-2] +
