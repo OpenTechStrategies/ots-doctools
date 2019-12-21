@@ -5,6 +5,13 @@ first is the latex source and the second is the metadata from the yaml
 frontmatter.  We pass the yaml frontmatter to that jinja2 template and
 print the results and the unchanged metadata.
 
+TODO: get the commit ID and timestamp of the current revision.  Then,
+insert it into the pdf as a comment somewhere that can be extracted.
+It would be good if PDFs were internally identified with svn revision
+and ots-doctools commit id.  One could then in theory reconstruct the
+state of the world for any doc.  Maybe we could even test buildability
+for anything in the sent dir.
+
 """
 import os
 
