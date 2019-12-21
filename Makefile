@@ -143,6 +143,7 @@ clean: clean_latex
 	@rm -f $(patsubst %.ltx,%.draft.ltx,$(wildcard *.ltx)) 
 	@rm -f $(patsubst %.ltx,%.redacted.ltx,$(wildcard *.ltx)) 
 	@rm -f *.redacted.ltx
+	@rm -f *.knowngood
 
 # Don't delete intermediate files
 .SECONDARY:
