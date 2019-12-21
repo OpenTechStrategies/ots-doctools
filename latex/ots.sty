@@ -10,6 +10,12 @@
 \ProvidesPackage{ots}
   [2016/09/01 v0.01 LaTeX package for consistent OTS docs]
 
+% Just some branding stuff
+\newcommand{\otslogoicon}{\raisebox{2em}{\includegraphics[clip,
+trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
+\renewcommand{\labelitemi}{\otslogoicon}
+\renewcommand{\footnoterule}{\textcolor{dkgreen}{\rule{\textwidth}{0.9pt}}\vspace*{0.6ex}}
+
 % We generally use \otsurl (which see) instead of \url.  However, we
 % make the 'url' package available just in case anyone wants it.
 % http://ctan.math.washington.edu/tex-archive/macros/latex/contrib/url/url.pdf
