@@ -14,12 +14,12 @@ TARGET="${1-.}"
 
 ## Test whether this directory is controlled by svn
 if svn info "${TARGET}" > /dev/null 2>&1; then
-  echo r`svn info "${TARGET}" | grep "Last Changed Rev: [0-9]" | sed -e 's/Last Changed Rev: //'`
+    echo r`svn info "${TARGET}" | grep "Last Changed Rev: [0-9]" | sed -e 's/Last Changed Rev: //'`
 elif git log --max-count 1 "${TARGET}" > /dev/null 2>&1; then
-		echo r`git log "${TARGET}" | grep -m 1 '^\s\+git-svn-id:.*\@[0-9]\+ ' | sed 's/.*@\([0-9]\+\) .*/\1/'`
+    echo r`git log "${TARGET}" | grep -m 1 '^\s\+git-svn-id:.*\@[0-9]\+ ' | sed 's/.*@\([0-9]\+\) .*/\1/'`
 
-		# Another way to accomplish the same thing.  Left here just for edification
-		# git svn log --limit=1 "${TARGET}" | grep ^r -m 1 | sed "s/ .*//"
+    # Another way to accomplish the same thing.  Left here just for edification
+    # git svn log --limit=1 "${TARGET}" | grep ^r -m 1 | sed "s/ .*//"
 else
   >&2 echo "ERROR: Not an svn working copy nor a git repo."
   exit 1
