@@ -90,7 +90,7 @@ def cli(filename, output, option, plugin):
     meta['output_filename'] = output
     
     # Grab the environment too
-    meta['environment'] = os.environ
+    meta['environment'] = dict(os.environ)
 
     # Pass to jinja any options submitted on the command line
     for o in option:
