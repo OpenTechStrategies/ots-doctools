@@ -13,7 +13,14 @@
 % Just some branding stuff
 \newcommand{\otslogoicon}{\raisebox{2em}{\includegraphics[clip,
 trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
-\renewcommand{\labelitemi}{\otslogoicon}
+% The renewcommand below, if uncommented, causes itemized lists to
+% have little OTS logos for bullet points.  After a while of reading a
+% document in that style, Karl found the list items a bit harder to
+% find visually than they are with regular bullet points, and had some
+% branding concerns about it as well: basically, worried that it might
+% strike clients as a little too pushy.  Up for discussion, of course.
+% 
+% \renewcommand{\labelitemi}{\otslogoicon}
 \renewcommand{\footnoterule}{\textcolor{dkgreen}{\rule{\textwidth}{0.9pt}}\vspace*{0.6ex}}
 
 % We generally use \otsurl (which see) instead of \url.  However, we
