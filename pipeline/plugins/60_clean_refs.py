@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 
-"""This plugin removes \S*ref:[0-9a-f]\S* from the output in an
-attempt to remove oref tags from the text.
+"""This plugin removes refs from the output so we can ref and deref
+without it showing in the final doc.
+
+By default, we remove ref:[0-9a-f]+ with surrounding parentheses and
+brackets.  You can set ref_regex in the YAML head of the doc to
+override.
+
 """
 import os
 import re
@@ -14,7 +19,7 @@ def run(text, meta):
 
     Returns text with a regex substitution and unchanged META."""
 
-    pat = re.compile("\S*ref:[0-9a-f]+\S*")
+    pat = re.compile(meta.get("ref_regex", "[[(]*ref:[0-9a-f]+[])]*"))
     text = pat.sub("", text)
     
     return text, meta
