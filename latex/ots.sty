@@ -36,6 +36,30 @@
 % http://tug.ctan.org/tex-archive/macros/latex/contrib/setspace/setspace.sty.
 \usepackage{setspace}
 
+% This is so we can do
+%
+%  \begin{adjustwidth}{LEFT_AMOUNT}{RIGHT_AMOUNT}
+%  ...your text here...
+%  \end{adjustwidth}
+%
+% For example, if LEFT_AMOUNT is "0.5in" then it will add 0.5 inches
+% to the left-side margin.
+%
+% An alternative would be to do this in the preamble...
+% 
+%   \def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+%   \let\endchangemargin=\endlist 
+%   
+% ...and then in the text:
+%   
+%   \begin{changemargin}{<arg>}{<arg>} 
+%   \end{changemargin} 
+%
+% See https://tex.stackexchange.com/questions/588/\
+% how-can-i-change-the-margins-for-only-part-of-the-text
+% for more.
+\usepackage{changepage}
+
 % See "An Acronym Environment for LaTeX 2e", by Tobias Oetiker:
 % http://ctan.mirrors.hoobly.com/macros/latex/contrib/acronym/acronym.pdf
 % 
