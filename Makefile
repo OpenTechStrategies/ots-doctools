@@ -81,7 +81,7 @@ all-redacted:
 %.pdf: %.ltx Makefile venv
 	@rm -f $@
 	@${PIPELINE} $< --output $(<:.ltx=.tex)
-	@latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error --shell-escape $(<:.ltx=.tex)
+	@latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error $(<:.ltx=.tex)
 	@rm -f $(@:.pdf=-$(REVBIN).pdf)
 	@mv $@ $(@:.pdf=-$(REVBIN).pdf)
 	@ln -sf $(@:.pdf=-$(REVBIN).pdf) $@
