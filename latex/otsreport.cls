@@ -165,6 +165,7 @@
 
 % We don't use this, but you might want to set the date as
 % \date{\today} and this will format it as "d Monthname yyyy"
+\usepackage{datetime2}
 \usepackage{datetime2-calc}
 \DTMnewdatestyle{otsdate}{%
   \renewcommand*{\DTMdisplaydate}[4]{\number##3~\DTMmonthname{##2} ##1}%
