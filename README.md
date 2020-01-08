@@ -60,6 +60,14 @@ metadata.  Each plugin must implement run(document, metadata) that
 returns doucment, metadata.  Optionally, a plugin might implement
 run_p(document, metadata) that returns true iff the plugin should run.
 
+We load and run plugins in asciibetical order and skip ones whose
+names start with something other than a digit or a number.  This
+allows users to disable a plugin by prefixing its name with an
+underscore.
+
+See the plugins in ./pipeline/plugins for documentation on specific
+plugins.
+
 ## Windows
 
 Linux and OS X should generally do the right thing with these

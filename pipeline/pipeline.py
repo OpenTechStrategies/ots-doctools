@@ -5,6 +5,7 @@ import frontmatter
 import importlib
 import os
 import pkgutil
+import re
 import sys
 
 """
@@ -31,7 +32,9 @@ def get_plugins(plugin_dir=None):
     PLUGIN_DIR is the name of the dir from which to load plugins.  If
     it is None, use the plugin dir in the dir that holds this func.
 
-    Plugins are loaded and run in asciibetical order.
+    We load plugins and run them in asciibetical order.  We ignore
+    plugins that begin with a character other than a digit or a
+    letter.
 
     PLUGIN API:
 
@@ -52,10 +55,12 @@ def get_plugins(plugin_dir=None):
                 os.path.abspath(__file__)), "plugins")
 
     plugins = {}
+    pat = re.compile(r"^[0-9a-zA-Z]")
     for fname in sorted(os.listdir(plugin_dir)):
         if (not fname.endswith(".py")
             or fname.startswith('.')
-            or '#' in fname):
+            or '#' in fname
+            or not pat.match(fname)):
             continue
         spec = importlib.util.spec_from_file_location(fname,
                                                       os.path.join(plugin_dir, fname)
