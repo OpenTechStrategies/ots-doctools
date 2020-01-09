@@ -55,16 +55,21 @@ def get_plugins(plugin_dir=None):
                 os.path.abspath(__file__)), "plugins")
 
     plugins = {}
-    pat = re.compile(r"^[0-9a-zA-Z]")
+    pat = {
+        "enabled": r"^[0-9a-zA-Z]",
+        "prefix": r"^[0-9]+_",
+    }
+    pat = {k: re.compile(v) for k,v in pat.items()}
+
     for fname in sorted(os.listdir(plugin_dir)):
         if (not fname.endswith(".py")
             or fname.startswith('.')
             or '#' in fname
-            or not pat.match(fname)):
+            or not pat['enabled'].match(fname)):
             continue
         spec = importlib.util.spec_from_file_location(fname,
-                                                      os.path.join(plugin_dir, fname)
-                                                      )
+                                                      os.path.join(plugin_dir, fname))
+        fname = pat["prefix"].sub("", fname)
         plugins[fname] = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(plugins[fname])
     return plugins

@@ -56,9 +56,18 @@ to build `foo.pdf` from `foo.ltx`.  For draft PDFs, use `make foo.draft.pdf`.
 
 We have enabled the use of jinja templates.  The Makefile runs
 pipeline.py, which applies a series of plugins to the document and its
-metadata.  Each plugin must implement run(document, metadata) that
+metadata.  Each plugin can implement run(document, metadata) that
 returns doucment, metadata.  Optionally, a plugin might implement
 run_p(document, metadata) that returns true iff the plugin should run.
+
+Plugins might also implement after and after_p, which get run after
+the doc is built.  These plugins might operate on the pdf or do
+post-build cleanup tasks.
+
+A well-behaved plugin should have some way to disable itself in the
+doc.  One easy method is to honor flags: if the user sets
+"PlUGIN_NAME: False" in the doc's YAML preamble, then run_p can return
+`meta.get('PLUGIN_NAME', True) != False`
 
 We load and run plugins in asciibetical order and skip ones whose
 names start with something other than a digit or a number.  This
