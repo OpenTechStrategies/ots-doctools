@@ -13,6 +13,9 @@ Current warnings:
 
  * footnote instead of \footnote
 
+This plugin has tests, which can be run via pytest.  Do `apt install
+python3-pytest` and then run `pytest-3`.
+
 """
 
 import pytest
