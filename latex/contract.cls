@@ -55,6 +55,8 @@
 \usepackage{titlesec}
 \titlespacing*{\section}{0cm}{0pt}{0pt}[0pt]
 \titleformat{\section}{\normalfont\bf}{\thesection.}{5pt}{}
+\titleformat{\subsection}{\normalfont\bf}{\thesubsection.}{5pt}{}
+\titleformat{\subsubsection}{\normalfont\bf}{\thesubsubsection.}{5pt}{}
 
 % Conventional wisdom says load hyperref last.  We need it or we get
 % \textorpdf errors
