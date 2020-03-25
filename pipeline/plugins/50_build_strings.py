@@ -13,7 +13,8 @@ import os
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
 import subprocess
-from yaml import dump, load
+from yaml import dump
+from yaml import safe_load as load
 
 def after_p(text, meta):
     """Even if there are no save_vars, we will add some standard info
