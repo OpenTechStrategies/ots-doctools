@@ -4,11 +4,6 @@
 % Use \circlesep to get a tiny little OTS logo if you want it
 % somewhere in this letterhead.
 
-% We need to do adjust the graphics search path so latex can find our
-% paths:
-% https://www.overleaf.com/learn/latex/Inserting_Images#The_folder_path_to_images
-% For now, we're putting the images in the doc source dir, which is
-% not cool.
 \vspace{0.5em}
 \begin{minipage}[c]{0.7\textwidth}
 \begin{figure}[H]
@@ -18,6 +13,7 @@
 \begin{minipage}[t]{0.25\textwidth}
   \vspace{-0.2em}
   \textcolor{dkergreen}{{\viiisf
+      % See issue #12 for some problems with the \includesvg calls below.
       \includesvg[height=0.85em]{noun_Email_3027864_ltgreen.svg}~~
       \raisebox{0.1em}{info@opentechstrategies.com} \\
       \vskip -1.5em \includesvg[height=1.5em]{noun_Telephone_2591756_ltgreen.svg}~

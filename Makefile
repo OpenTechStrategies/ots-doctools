@@ -81,7 +81,10 @@ all-redacted:
 %.pdf: %.ltx Makefile venv
 	@rm -f $@
 	@${PIPELINE} $< --output $(<:.ltx=.tex)
-	@latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error $(<:.ltx=.tex)
+	@# This next command is a kluge for issue 12 (part 1).
+	@cp $${OTS_DOCTOOLS_DIR}/latex/*.svg .
+	@# The '-shell-escape' here is a kluge; see issue 12 (part 2).
+	@latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error -shell-escape $(<:.ltx=.tex)
 	@rm -f $(@:.pdf=-$(REVBIN).pdf)
 	@mv $@ $(@:.pdf=-$(REVBIN).pdf)
 	@ln -sf $(@:.pdf=-$(REVBIN).pdf) $@
