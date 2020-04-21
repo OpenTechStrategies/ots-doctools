@@ -28,7 +28,7 @@ def run_p(text, meta):
     return meta.get('bugs', True) != False
 
 pat = {
-    "footnote" : r".*[^\\\s]footnote.*"
+    "footnote" : r".*[^\\\s]footnote\b.*"
     }
 
 pat = {k: re.compile(v) for k,v in pat.items()}
