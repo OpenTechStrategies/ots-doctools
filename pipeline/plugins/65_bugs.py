@@ -44,7 +44,10 @@ def run(text, meta):
         found = True
 
     if found and not meta['draft']:
-        sys.stderr.write("Pipeline found errors in LaTeX. Stopping build.\n")
+        sys.stderr.write("ERROR: Pipeline found errors in LaTeX.  Stopping build\n")
+        sys.stderr.write("       because errors were found and this is not a draft.\n")
+        sys.stderr.write("       To have the build continue despite the pipeline errors,\n")
+        sys.stderr.write("       either set 'draft' to True or set 'bugs' to False.\n")
         sys.exit(-1)
         
     return text, meta
