@@ -21,7 +21,6 @@ https://gitlab.com/inkscape/inkscape/-/issues/1315
 """
 
 import subprocess
-import sys
 
 def run_p(text, meta):
     try:
