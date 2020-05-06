@@ -11,7 +11,7 @@ first-referenced link below for updates to the workaround.
 References:
 
   * Latex SVG package bug report on this issue.  It contains the
-    workaround.  https://github.com/mrpiggi/svg/issues/21
+    workaround.  https://github.com/mrpiggi/svg/issues/20
 
   * Inkscape issue on removing options breaking 3rd-party tools.
 https://gitlab.com/inkscape/inkscape/-/issues/1315
