@@ -7,6 +7,10 @@ By default, we remove ref:[0-9a-f]+ with surrounding parentheses and
 brackets.  You can set ref_regex in the YAML head of the doc to
 override.
 
+The reference system this plugin works with is oref, which is
+available in ots-tools at
+https://github.com/OpenTechStrategies/ots-tools/blob/master/emacs-tools/oref.el
+
 """
 import os
 import re
