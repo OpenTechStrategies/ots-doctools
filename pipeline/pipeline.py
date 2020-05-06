@@ -18,7 +18,7 @@ Ex: pipeline.py target.ltx -o stage pre
 def dump(text, meta, fname="/tmp/t.tex"): 
     """Writes the current text and meta to /tmp/t.tex or fname if
        specified"""
-    with open(fname 'w') as fh:
+    with open(fname, 'w') as fh:
         fh.write(pp.pformat(meta))
         fh.write("\n---\n")
         fh.write(text)
