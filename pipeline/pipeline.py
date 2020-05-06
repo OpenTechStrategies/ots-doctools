@@ -5,15 +5,24 @@ import frontmatter
 import importlib
 import os
 import pkgutil
+import pprint
+pp = pprint.PrettyPrinter(indent=4)
 import re
 import sys
-
 """
 The 'stage' option is for running this pipeline either pre- or post- latex.
 Ex: pipeline.py target.ltx -o stage post
 Ex: pipeline.py target.ltx -o stage pre
 """
 
+def dump(text, meta, fname="/tmp/t.tex"): 
+    """Writes the current text and meta to /tmp/t.tex or fname if
+       specified"""
+    with open(fname 'w') as fh:
+        fh.write(pp.pformat(meta))
+        fh.write("\n---\n")
+        fh.write(text)
+        
 def err(msg):
     """Yeah, this is an obnoxious error message, but the user will have to
     pick it out of a long scroll of LaTeX and make output.
@@ -130,6 +139,6 @@ def cli(filename, output, option, plugin):
                 fh.write(text)
         else:
             print(text)
-        
+            
 if __name__ == '__main__':
     cli()
