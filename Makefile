@@ -9,6 +9,9 @@ REVBIN := $(shell find . -type f -name get_revision -print -quit)
 endif
 REVBIN := $(shell ${REVBIN})
 
+PYTHON_MODULES := click jinja2 pytest python-frontmatter
+PYTHON_PROVIDES := click, jinja2, pytest, frontmatter
+
 LTX=$(wildcard *.ltx)
 
 PDFLATEX="pdflatex"
@@ -16,7 +19,8 @@ PDFLATEX="pdflatex"
 # PIPELINE is a script that takes yaml-fronted latex and runs it
 # through our pipeline.  See the ots-doctools pipeline directory for
 # more.
-PIPELINE=venv/bin/python3 ${OTS_DOCTOOLS_DIR}/pipeline/pipeline.py
+PYBIN=$(shell test -d venv && echo venv/bin/python3 || echo python3)
+PIPELINE=${PYBIN} ${OTS_DOCTOOLS_DIR}/pipeline/pipeline.py
 
 default: build-or-help
 
@@ -112,8 +116,10 @@ all-redacted:
 # document dirs with a venv dir.  OTOH, it happens automatically, so
 # it's one less thing for a user to think about.
 venv:
-	virtualenv -p python3 venv
-	venv/bin/pip3 install click jinja2 pytest python-frontmatter
+	@if ! python -c "import ${PYTHON_PROVIDES}"; then    \
+	  virtualenv -p python3 venv;                            \
+	  venv/bin/pip3 install ${PYTHON_MODULES};               \
+	fi;
 
 # LaTeX litters a lot
 clean_latex:
