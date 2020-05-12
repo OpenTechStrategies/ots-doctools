@@ -1,6 +1,6 @@
 # LaTeX Makefile
 
-# Find 'get_revision', used to get the current SVN (or Git) revision. 
+# Find 'get_revision', used to get the current SVN (or Git) revision.
 # This script is required for 'make foo.draft.pdf' -- if get_revision
 # is not found somewhere, that rule will fail.
 REVBIN := $(OTS_DOCTOOLS_DIR)/get_revision
@@ -38,7 +38,7 @@ build-or-help:
 	  for name in *.ltx; do                                \
 	    echo "  make `basename $${name} .ltx`.draft.pdf";  \
 	  done;                                                \
-        fi	
+        fi
 
 # The 'make all' and 'make all-drafts' functionality only works in
 # directories where each .ltx file corresponds to an output .pdf.
@@ -113,13 +113,13 @@ all-redacted:
 # it's one less thing for a user to think about.
 venv:
 	virtualenv -p python3 venv
-	venv/bin/pip3 install python-frontmatter jinja2 click pytest
+	venv/bin/pip3 install click jinja2 pytest python-frontmatter
 
 # LaTeX litters a lot
 clean_latex:
 	@latexmk -c -f $(wildcard *.ltx) $(wildcard *.tex)
-	@rm -f $(patsubst %.ltx,%.bbl,$(wildcard *.ltx)) 
-	@rm -f $(patsubst %.ltx,%.run.xml,$(wildcard *.ltx)) 
+	@rm -f $(patsubst %.ltx,%.bbl,$(wildcard *.ltx))
+	@rm -f $(patsubst %.ltx,%.run.xml,$(wildcard *.ltx))
 
 # We don't remove .pdf files by default, even though they're generated
 # files, because in practice one usually wants to keep them around.
@@ -144,12 +144,11 @@ clean: clean_latex
         )
 	@if [ -s "latex2docx" ]; then rm -f latex2docx; fi
 	@if [ -s "latex2odt" ]; then rm -f latex2odt; fi
-	@rm -f $(patsubst %.ltx,%.tex,$(wildcard *.ltx)) 
-	@rm -f $(patsubst %.ltx,%.draft.ltx,$(wildcard *.ltx)) 
-	@rm -f $(patsubst %.ltx,%.redacted.ltx,$(wildcard *.ltx)) 
+	@rm -f $(patsubst %.ltx,%.tex,$(wildcard *.ltx))
+	@rm -f $(patsubst %.ltx,%.draft.ltx,$(wildcard *.ltx))
+	@rm -f $(patsubst %.ltx,%.redacted.ltx,$(wildcard *.ltx))
 	@rm -f *.redacted.ltx
 	@rm -f *.knowngood
 
 # Don't delete intermediate files
 .SECONDARY:
-
