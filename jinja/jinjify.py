@@ -17,10 +17,13 @@ import os
 
 # Search path for Jinja templates, in order of preference
 TEMPLATE_DIRS = [ os.path.abspath(os.getcwd()),
-                  os.path.join(os.getenv('OTSDIR'), 'forms', 'jinja'),
-                  os.path.join(os.getenv('OTSDIR'), 'forms', 'latex'),
                   os.path.join(os.getenv('OTS_DOCTOOLS_DIR'), 'jinja'),
                   os.path.join(os.getenv('OTS_DOCTOOLS_DIR'), 'latex')]
+if os.getenv('OTSDIR') is not None:
+    # OTS folks have the OTSDIR env var set too; use it if available.
+    TEMPLATE_DIRS += [
+                  os.path.join(os.getenv('OTSDIR'), 'forms', 'jinja'),
+                  os.path.join(os.getenv('OTSDIR'), 'forms', 'latex')]
 
 import jinja2
 import subprocess
