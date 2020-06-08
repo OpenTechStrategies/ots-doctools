@@ -14,6 +14,10 @@ for anything in the sent dir.
 
 """
 import os
+import jinja2
+import subprocess
+import re
+import sys
 
 # Search path for Jinja templates, in order of preference
 TEMPLATE_DIRS = [ os.path.abspath(os.getcwd()),
@@ -24,11 +28,6 @@ if os.getenv('OTSDIR') is not None:
     TEMPLATE_DIRS += [
                   os.path.join(os.getenv('OTSDIR'), 'forms', 'jinja'),
                   os.path.join(os.getenv('OTSDIR'), 'forms', 'latex')]
-
-import jinja2
-import subprocess
-import re
-import sys
 
 regex = {'sub':r'[^a-zA-Z0-9.,?!]'}
 for r in regex:
