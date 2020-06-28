@@ -7,6 +7,9 @@
 \VAR{item}
 \BLOCK{endfor}
 
+\BLOCK{block preamble}
+\BLOCK{endblock}
+
 \BLOCK{if draft is defined and (draft=='True' or draft==True)}
 \usepackage{draftwatermark}
 \SetWatermarkText{DRAFT}
@@ -55,7 +58,7 @@
 
 \BLOCK{block letterhead}
 \BLOCK{endblock} %# letterhead
-  
+
 \BLOCK{block title}
   \BLOCK{ if title is defined }
     \begin{center}
