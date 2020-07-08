@@ -8,8 +8,8 @@ The expected audience is people who want to work with the source text
 of our published reports.  If you have the source repository for a given
 report, and you have this infrastructure, you should be able to re-create the
 published report (usually a PDF).  Please
-[let us know](https://github.com/OpenTechStrategies/ots-doctools/issues/new) 
-if you have difficulty doing so.  We always welcome suggestions for 
+[let us know](https://github.com/OpenTechStrategies/ots-doctools/issues/new)
+if you have difficulty doing so.  We always welcome suggestions for
 improving this infrastructure.
 
 ## Installation
@@ -83,3 +83,9 @@ Linux and OS X should generally do the right thing with these
 materials.  We have not documented how to set this up on Windows
 because we haven't tried that setup.  If you're on Windows, please let
 us know how it goes and how we can improve these materials.
+
+## Dependencies
+
+You'll need Python3 and the items in `requirements.txt`.  You can
+install the latter with `pip3 install -r requirements.txt` or use your
+usual python dependency management system.
