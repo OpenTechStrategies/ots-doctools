@@ -77,6 +77,55 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
 % http://ctan.mirrors.hoobly.com/macros/latex/contrib/acronym/acronym.pdf
 % 
 % Acronyms should be expanded on first use, but not after.
+%
+% Research note:
+% --------------
+% 
+% In case you're wondering why the "acronym" package versus, say, the
+% "acro" package, % which is very similar, it happens that Karl went
+% down this research road (because reasons, yak-shaving, etc) and
+% his tentative conclusion is that "acronym" is the most popular one,
+% and that even the author of "acro" doesn't necessarily think you
+% should switch from "acronym" to "acro" unless you really need to.
+% Specifically, see this in the source of "acro" (in acro_en.tex):
+%
+%   > After \wikipedia{} told us what acronyms are and we won't confuse them
+%   > with units or other kinds of abbreviations -- why would we need
+%   > another package for them?  There are several already:
+%   > \pkg{acronym}~\cite{pkg:acronym}, \pkg{acromake}~\cite{pkg:acromake},
+%   > \pkg{acroterm}~\cite{pkg:acroterm}, the abbreviations package
+%   > \pkg{abbrevs}~\cite{pkg:abbrevs} (the current version 1.4 has a
+%   > bug\footnote{see \url{http://tex.stackexchange.com/q/59840/5049}
+%   > for solutions.}, though), the nomenclature package
+%   > \pkg{nomencl}~\cite{pkg:nomencl}, and of course the mighty
+%   > \pkg{glossaries}~\cite{pkg:glossaries}. So there is really no
+%   > \emph{need} for a new package.
+%   > 
+%   > On the other hand \pkg{acronym}, the best of the acronym specific
+%   > packages, has one or two shortcomings and sometimes using
+%   > \pkg{glossaries} seems a bit of an overkill (or simply inconvenient as
+%   > one has to run \code{makeglossaries}, \code{makeindex} or
+%   > \code{xindy}, then\footnote{Rumour has it there is going to be a
+%   > version that can be used without running an external program}). So
+%   > \acro\ stands somewhere in between (but closer to \pkg{acronym}).
+%   > 
+%   > The main reason for the existance of \acro\ is a question on
+%   > \acs{tex.sx}
+%   > \footnote{\url{http://tex.stackexchange.com/q/59449/5049}} which
+%   > intrigued me and in consequence led to \acro\ and it's option
+%   > \option{single}.
+%   > 
+%   > \acro\ has many similarities with the \pkg{acronym} package.  In fact,
+%   > quite some macros have the same name and meaning\footnote{\emph{Not}
+%   > in the sense of \cs*{meaning}!}.
+%   > 
+%   > Please take a minute to think and decide which package will suit your
+%   > needs best.  Are you planning to add a glossary to your book?  You
+%   > should probably go with \pkg{glossaries}, then.  Are you planning to
+%   > add a nomenclature?  You may want to choose \pkg{nomencl} (or again:
+%   > \pkg{glossaries}) and so on.  \acro\ does a good job for lists of
+%   > abbreviations.
+
 \usepackage[printonlyused,withpage]{acronym}
 % One acronym bug you should know about if you're using it: If first
 % reference isn't \ac{foo} but instead \acl{foo} or similar, follow it
