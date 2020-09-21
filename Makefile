@@ -116,7 +116,7 @@ all-redacted:
 # document dirs with a venv dir.  OTOH, it happens automatically, so
 # it's one less thing for a user to think about.
 venv:
-	@if ! python -c "import ${PYTHON_PROVIDES}"; then    \
+	@if ! ${PYBIN} -c "import ${PYTHON_PROVIDES}"; then      \
 	  virtualenv -p python3 venv;                            \
 	  venv/bin/pip3 install ${PYTHON_MODULES};               \
 	fi;
