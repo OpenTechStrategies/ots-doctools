@@ -7,7 +7,7 @@ SOURCE=$(wildcard *.ltx)
 TARGETS=$(SOURCE:.ltx=.pdf)
 
 ### Try to find ots-doctools directory.  We look in the current dir, then
-### for a $OTS_DOCTOOLS_DIR environment variable, then $OTSDIR/forms/latex,
+### for a $OTS_DOCTOOLS_DIR environment variable, then $OTS_DIR/forms/latex,
 ### then ~/OTS/forms/latex, then /usr/local/src/ots-doctools
 # If there's a local ots-doctools dir, use it
 ifneq ("$(wildcard ots-doctools)","")
@@ -15,8 +15,8 @@ OTS_DOCTOOLS_DIR = ots-doctools
 else
 # Otherwise maybe one's defined in the environment
 ifndef OTS_DOCTOOLS_DIR
-ifneq ("$(wildcard $(OTSDIR)/forms/latex)","")
-OTS_DOCTOOLS_DIR = "$(OTSDIR)/forms/latex"
+ifneq ("$(wildcard $(OTS_DIR)/forms/latex)","")
+OTS_DOCTOOLS_DIR = "$(OTS_DIR)/forms/latex"
 else
 ifneq ("$(wildcard ~/OTS/forms/latex)","")
 OTS_DOCTOOLS_DIR = "~/OTS/forms/latex"
