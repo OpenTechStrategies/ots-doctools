@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{contract}[2015/04/10 My custom contract class] 
+\ProvidesClass{contract}[2015/04/10 My custom contract class]
 \LoadClass{article}
-            
+
 \usepackage{graphicx} % for graphic sigs
 
 \usepackage[en-GB]{datetime2}
@@ -78,6 +78,7 @@
   \end{minipage}
 }
 
+
 % Takes an optional date argument (#4).  Typically, the OTS signer
 % includes a date, because we're sending someone a contract that
 % we've signed, for them to countersign.  So the date is included
@@ -101,7 +102,7 @@
     \\{\small #4} \hrule \\[0pt]
     \vskip 1em
     {\small Date:} #5 \hrule \\[0pt]
-    
+
   \end{tabular}
   \end{minipage}
 }
