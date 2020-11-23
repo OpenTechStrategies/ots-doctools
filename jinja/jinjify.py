@@ -48,12 +48,12 @@ def md2tex(string):
                          stdin=subprocess.PIPE,
                          stderr=subprocess.PIPE
     )
-    return p.communicate(input=string.encode('UTF-8'))[0].decode('UTF-8') 
+    return p.communicate(input=string.encode('UTF-8'))[0].decode('UTF-8')
 
 def run(text, meta):
     """Apply jinja templates to TEXT, using metadata from dict META.
     Returns rendered text and unchanged META."""
-    
+
     # Make a version of a Jinja2 parser that plays nice with LaTeX
     latex_jinja_env = jinja2.Environment(
             block_start_string = '\BLOCK{',
@@ -72,9 +72,9 @@ def run(text, meta):
                                 'proposal.ltx':'test'}),
             ])
         )
-    
+
     template = latex_jinja_env.get_template('jinjify_me.ltx')
-    
+
     # Quick example of calling a python func from our template. Evoke with
     # \VAR{testfunc()}
     #def testfunc():
