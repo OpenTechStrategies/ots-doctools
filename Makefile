@@ -9,9 +9,7 @@ REVBIN := $(shell find . -type f -name get_revision -print -quit)
 endif
 REVBIN := $(shell ${REVBIN})
 
-PYTHON_MODULES := click jinja2 pytest python-frontmatter
-PYTHON_PROVIDES := click, jinja2, pytest, frontmatter
-
+PYTHON_PROVIDES := $(shell sed 's/^python-//' ${OTS_DOCTOOLS_DIR}/requirements.txt | xargs echo | sed "s/ /, /g")
 LTX=$(wildcard *.ltx)
 
 PDFLATEX="pdflatex"
@@ -21,7 +19,6 @@ PDFLATEX="pdflatex"
 # more.
 PYBIN=$(shell test -d venv && echo venv/bin/python3 || echo python3)
 PIPELINE=${PYBIN} ${OTS_DOCTOOLS_DIR}/pipeline/pipeline.py
-
 default: build-or-help
 
 build-or-help:
@@ -117,8 +114,8 @@ all-redacted:
 # it's one less thing for a user to think about.
 venv:
 	@if ! ${PYBIN} -c "import ${PYTHON_PROVIDES}"; then      \
-	  virtualenv -p python3 venv;                            \
-	  venv/bin/pip3 install ${PYTHON_MODULES};               \
+	  test -d venv || virtualenv -p python3 venv ;  \
+	  venv/bin/pip3 install -r ${OTS_DOCTOOLS_DIR}/requirements.txt; \
 	fi;
 
 # LaTeX litters a lot
