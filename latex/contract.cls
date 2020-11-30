@@ -87,7 +87,7 @@
   \begin{minipage}[t]{7cm}
   \begin{tabular}{@{}p{#1}@{}}
     \\[2\normalbaselineskip] \hrule \\[0pt]
-    {\small \textit{#2}} \\ {\small \textit{#3}} \\[2\normalbaselineskip] \\ #4 \hrule \\[0pt]
+    {\small \textit{#2}} \\ {\small \textit{#3}} \\[2\normalbaselineskip] \\ ~\raisebox{.3em}{#4} \hrule \\[0pt]
     {\small \textit{Date}}
   \end{tabular}
   \end{minipage}
