@@ -12,7 +12,9 @@ REVBIN := $(shell ${REVBIN})
 PYTHON_PROVIDES := $(shell sed 's/^python-//' ${OTS_DOCTOOLS_DIR}/requirements.txt | xargs echo | sed "s/ /, /g")
 LTX=$(wildcard *.ltx)
 
+ifndef PDFLATEX
 PDFLATEX="pdflatex"
+endif
 
 # PIPELINE is a script that takes yaml-fronted latex and runs it
 # through our pipeline.  See the ots-doctools pipeline directory for
@@ -85,7 +87,7 @@ all-redacted:
 	@# This next command is a kluge for issue 12 (part 1).
 	@cp $${OTS_DOCTOOLS_DIR}/latex/*.svg .
 	@# The '-shell-escape' here is a kluge; see issue 12 (part 2).
-	@latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error -shell-escape $(<:.ltx=.tex)
+	latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error -shell-escape $(<:.ltx=.tex)
 	@rm -f $(@:.pdf=-$(REVBIN).pdf)
 	@mv $@ $(@:.pdf=-$(REVBIN).pdf)
 	@ln -sf $(@:.pdf=-$(REVBIN).pdf) $@
@@ -123,6 +125,9 @@ clean_latex:
 	@latexmk -c -f $(wildcard *.ltx) $(wildcard *.tex)
 	@rm -f $(patsubst %.ltx,%.bbl,$(wildcard *.ltx))
 	@rm -f $(patsubst %.ltx,%.run.xml,$(wildcard *.ltx))
+
+%.pdf: %.docx
+	libreoffice --convert-to pdf $<
 
 # We don't remove .pdf files by default, even though they're generated
 # files, because in practice one usually wants to keep them around.
