@@ -181,6 +181,38 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
 % file under "Local Variables", which makes `ots-find-ref' work here.)
 \newcommand{\otsref}[1]{}
 
+% I love this so much.  Here's what's going on:
+%
+% Sometimes you want an enumerated list where the separator after the
+% number is a single right parenthesis instead of a dot.  Like this:
+%
+%   1) item one
+%   2) item two
+%   3) item three
+%
+% ...and so on.  This can easily be accomplished in LaTeX like this:
+%
+%   \begin{enumerate}[label=\arabic*)]
+%
+% But what if you want to refer to specific list items by label,
+% that is, using references instead of just hardcoding numbers?
+% 
+% Setting up the labels is the easy part:
+% 
+%   \begin{enumerate}[label=\arabic*)]
+%     \item\label{fish} This is item one, internally labeled "fish".
+%     \item\label{sock} This is item two, internally labeled "sock".
+%   \end{enumerate}
+% 
+% But that means "\ref{sock}" will produce "2)" instead of "(2)".  You
+% could write "(\ref{sock}", but I trust I don't need to explain why
+% that's not a pleasant thing to see in one's LaTeX source.
+% 
+% Hence this new command.  The single left paren is still there, but
+% at least it's isolated to the command definition so you won't see it
+% when working with the LaTeX source text.
+\newcommand{\otsparenref}[1]{(\ref{#1}}
+
 % Use one or the other version of this command for citations to other
 % documents.  The \otsciteid variant is for citations involving some
 % kind of unique identifier (e.g., like for the document inventory in
