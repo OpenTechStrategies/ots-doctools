@@ -23,4 +23,4 @@ elif git log --max-count 1 "${TARGET}" > /dev/null 2>&1; then
 else
   >&2 echo "ERROR: Not an svn working copy nor a git repo."
   exit 1
-fi 
+fi
