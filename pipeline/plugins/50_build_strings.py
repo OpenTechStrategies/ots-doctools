@@ -34,15 +34,14 @@ def after(pdf_fname, meta):
     ## Go through saved vars and default vars, saving some and munging
     ## as needed.
     out = {}
-    get_rev = os.path.join(
-        os.path.split(os.path.split(os.path.split(__file__)[0])[0])[0],
-        "get_revision")
+    ots_doctools_dir = os.getenv("OTS_DOCTOOLS_DIR")
+    get_rev = os.path.join(ots_doctools_dir, "get_revision")
     out['ots_svn'] = subprocess.check_output(get_rev, shell=True).decode("utf-8").strip()
     out['doctools_git_id'] = subprocess.check_output(
-        r"cd %s; git log -n 1 | head -n 1 | sed -re 's/(commit [0-9a-f]*) .*/\1/'" % os.path.split(__file__)[0],        
+        r"cd %s; git log -n 1 | head -n 1 | sed -re 's/(commit [0-9a-f]*) .*/\1/'" % ots_doctools_dir,        
         shell=True).decode("utf-8").strip()
     out['doctools_git_branch'] = subprocess.check_output(
-        r"cd %s; git branch | grep '\*'" % os.path.split(__file__)[0],
+        r"cd %s; git branch | grep '\*'" % ots_doctools_dir,
         shell=True).decode("utf-8")[1:].strip()
 
     ## grab the indicated vars
