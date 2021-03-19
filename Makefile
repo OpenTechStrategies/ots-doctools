@@ -1,14 +1,5 @@
 # LaTeX Makefile
 
-# Find 'get_revision', used to get the current SVN (or Git) revision.
-# This script is required for 'make foo.draft.pdf' -- if get_revision
-# is not found somewhere, that rule will fail.
-REVBIN := $(OTS_DOCTOOLS_DIR)/get_revision
-ifeq ("$(wildcard $(REVBIN))","")
-REVBIN := $(shell find . -type f -name get_revision -print -quit)
-endif
-REVBIN := $(shell ${REVBIN})
-
 PYTHON_PROVIDES := $(shell sed 's/^python-//' ${OTS_DOCTOOLS_DIR}/requirements.txt | xargs echo | sed "s/ /, /g")
 LTX=$(wildcard *.ltx)
 
@@ -88,12 +79,7 @@ all-redacted:
 	@cp $${OTS_DOCTOOLS_DIR}/latex/*.svg .
 	@# The '-shell-escape' here is a kluge; see issue 12 (part 2).
 	latexmk -pdf -pdflatex=$(PDFLATEX) -halt-on-error -shell-escape $(<:.ltx=.tex)
-	@rm -f $(@:.pdf=-$(REVBIN).pdf)
-	@mv $@ $(@:.pdf=-$(REVBIN).pdf)
-	@ln -sf $(@:.pdf=-$(REVBIN).pdf) $@
-
 	@cp $< $(<:.ltx=.knowngood) # for diffing broken builds to find bugs
-
 	@${PIPELINE} $< -o stage post
 
 # This builds a draft.  This only works if you're using the jinja
