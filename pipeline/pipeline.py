@@ -109,7 +109,7 @@ def tuple2dict(tup):
     '-o',
     nargs=2,
     multiple=True,
-    default='',
+    default=None,
     help='Variables and their values.')
 def cli(filename, output, option, plugin):
     pdf_fname = os.path.splitext(filename)[0] + '.pdf'
