@@ -27,7 +27,7 @@
 % Oddly enough, what we actually say in English is "1.0 hours" and
 % "1.00 hours", etc.  Turns out our singular/plural grammar is not
 % strictly based on the math.  Who knew?  (Linguists, that's who.)
-\newcommand{\timeentry}[4]{#1 & \parbox[t]{20em}{#2\vspace*{0.2em}} & #3 hour\ifthenelse{\equal{\detokenize{#3}}{1}}{}{s} & \$#4\\}
+\newcommand{\timeentry}[4]{#1 & \parbox[t]{20em}{#2\vspace*{0.2em}} & #3 \ifthenelse{\equal{\detokenize{#3}}{1}}{\hphantom{s}hour}{hours} & \$#4\\}
 
 % For flat-rate entries in a timereport, just use \flatentry.  The three arguments are: 
 %
@@ -48,7 +48,7 @@
    \sbox{\timereportdollartotal}{#2}
    \renewcommand{\arraystretch}{1.75}%
    \setlength{\tabcolsep}{1em}
-   \begin{longtable}[t]{llrl}\underline{Date} & \underline{Description} & \underline{Time} & \underline{Charge}\\}
+   \begin{longtable}[t]{llrr}\underline{Date} & \underline{Description} & \underline{Time} & \underline{Charge}\\}
   {\hline\multicolumn{3}{r}{\rule[-3mm]{0mm}{8mm}\textbf{Total}: \textbf{\usebox{\timereporttimetotal} hours}}&\textbf{\$\usebox{\timereportdollartotal}}\\\end{longtable}}
 
 % Use flatreport if you have *only* flat-rate entries
@@ -59,7 +59,7 @@
   {\sbox{\flatreportdollartotal}{#1}
    \renewcommand{\arraystretch}{1.75}%
    \setlength{\tabcolsep}{0.5em}
-   \begin{longtable}[t]{llll}\underline{Date} & \underline{Description} & \underline{Time} & \underline{Charge}\\}
+   \begin{longtable}[t]{llrr}\underline{Date} & \underline{Description} & \underline{Time} & \underline{Charge}\\}
   {\hline\multicolumn{3}{r}{\rule[-3mm]{0mm}{6mm}\textbf{Total}: } \hspace{5em} &\textbf{\$\usebox{\flatreportdollartotal}}\\\end{longtable}}
 
 % For expense entries, use \expenseentry.  The three arguments are: 
