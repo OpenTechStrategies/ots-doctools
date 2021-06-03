@@ -14,7 +14,20 @@
 %   Hours     (e.g., "3")
 %   Dollars   (e.g., "900")
 %
-\newcommand{\timeentry}[4]{#1&\parbox[t]{20em}{#2\vspace*{0.2em}}&#3 hours&\$#4\\}
+% The "\ifthenelse" command is so that our invoices use singular
+% "hour" in the case of "1 hour" and plural "hours" otherwise.
+% 
+% Note that if you wanted singular "hour" even for the values "1.0"
+% and "1.00", you could get that by replacing the "{s}" (that is, the
+% 'else' portion of the command) with a nested conditional:
+% 
+%   \ifthenelse{\equal{\detokenize{#3}}{\detokenize{1.0}}}{}{\ifthenelse{\equal{\detokenize{#3}}{\detokenize{1.00}}}{}{s}}
+%
+% However, I tried it, and it turns out that "1.0 hour" looks silly.
+% Oddly enough, what we actually say in English is "1.0 hours" and
+% "1.00 hours", etc.  Turns out our singular/plural grammar is not
+% strictly based on the math.  Who knew?  (Linguists, that's who.)
+\newcommand{\timeentry}[4]{#1 & \parbox[t]{20em}{#2\vspace*{0.2em}} & #3 hour\ifthenelse{\equal{\detokenize{#3}}{1}}{}{s} & \$#4\\}
 
 % For flat-rate entries in a timereport, just use \flatentry.  The three arguments are: 
 %
