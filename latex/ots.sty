@@ -213,6 +213,30 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
 % when working with the LaTeX source text.
 \newcommand{\otsparenref}[1]{(\ref{#1}}
 
+% Create an indented, italicized, parenthesized green TBD note.
+% 
+% By the way, https://htmlcolorcodes.com/colors/shades-of-green/ tells
+% us that #4F7942 == "Fern Green".
+%
+% Internal OTS note: We had some similar commands way back when, in
+% some of the reports we wrote for the PSM project.  Nowadays that's
+% all archived in SVN and is no longer in HEAD.  To see them, do:
+%
+%   $ svn checkout https://.../clients/hhs/cms/@r13321
+%   $ cd cms
+%   $ find . -name "*.ltx" -print
+%
+% The LaTeX commands in question are:
+% 
+%   - \vtbd    (in psm-approaches.ltx and psc-gap-analysis.ltx)
+%   - \otswarn (in psm-approaches.ltx)
+%
+% Also, there are a number of other interesting LaTeX commands there
+% that we might want to revive some day, like \otscaption, \otshref,
+% \iitem, \specialcell, \filespec, and \otsfirstterm.
+\usepackage{xcolor}
+\newcommand{\otsindentednote}[1]{\begin{adjustwidth}{2em}{2em}\textcolor[HTML]{4F7942}{\textit{\textbf{#1}}}\end{adjustwidth}}
+
 % Use one or the other version of this command for citations to other
 % documents.  The \otsciteid variant is for citations involving some
 % kind of unique identifier (e.g., like for the document inventory in
