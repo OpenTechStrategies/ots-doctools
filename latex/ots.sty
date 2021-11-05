@@ -164,6 +164,10 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
 \newcommand{\fullref}[1]{%
   \ref{#1}~``\nameref{#1}''}
 
+% Refer to a [sub[sub]]section by name and page number.
+\newcommand{\npref}[1]{%
+  ``\nameref{#1}'',~p.~\pageref{#1}}
+
 % Use this for including source references that you don't want to
 % include in the output, for example the unique codes used by
 % `ots-set-ref' and `ots-find-ref' from ${OTS_DIR}/utils/ots.el.
