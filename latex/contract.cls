@@ -65,6 +65,8 @@
 %----------------------------------------------------------------------------------------
 %	SIGNATURE BLOCK
 %----------------------------------------------------------------------------------------
+
+% USE THIS ONE FOR WHEN OTS IS SIGNING AND INCLUDING A SIGNATURE IMAGE.
 \newcommand{\signedblock}[5][5cm]{%
   \begin{minipage}[t]{7cm}
     \begin{tabular}{@{}p{#1}@{}}
@@ -79,6 +81,8 @@
 }
 
 
+% USE THIS ONE FOR A SIG BLOCK WITHOUT A SIGNATURE IMAGE.
+% 
 % Takes an optional date argument (#4).  Typically, the OTS signer
 % includes a date, because we're sending someone a contract that
 % we've signed, for them to countersign.  So the date is included
