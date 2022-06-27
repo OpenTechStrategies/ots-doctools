@@ -287,12 +287,12 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
 \newcommand*\otsdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
 \makeatother
 
-% Use to make description lists with referenceable items.  E.g.:
+% Use \otsnamedlabel in description lists to get referenceable items.  E.g.:
 %
 %   \begin{description}[labelindent=2em]
-%     \item[\otsnamedlabel{req:low-cost}{$\otsdot$ Low Cost}] --- Cheaper per month.
-%     \item[\otsnamedlabel{req:data-mgmt}{$\otsdot$ Data Management}] --- Better back-end data management.
-%     \item[\otsnamedlabel{req:control}{$\otsdot$ More Better}] --- So much more better than before.
+%     \item[\otsnamedlabel{req:low-cost}{Low Cost}] --- Cheaper per month.
+%     \item[\otsnamedlabel{req:data-mgmt}{Data Management}] --- Better back-end data management.
+%     \item[\otsnamedlabel{req:control}{More Better}] --- So much more better than before.
 %   \end{description}
 %
 % Inspired by https://texblog.org/2012/03/21/cross-referencing-list-items/.
