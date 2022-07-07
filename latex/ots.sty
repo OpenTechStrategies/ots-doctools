@@ -221,7 +221,13 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
 % when working with the LaTeX source text.
 \newcommand{\otsparenref}[1]{(\ref{#1}}
 
-% Create an indented, italicized, parenthesized green TBD note.
+% Create an indented, italicized, parenthesized green note.
+%
+% This comes in both command form ("\otsindentednote") and environment
+% form ("\begin{otsindentednoteenv}...\end{otsindentednoteenv}"),
+% because sometimes you want to drop a brief note into the doc and
+% sometimes you want to write multi-paragraph note.  Sorry about the
+% "env" suffix on the environment name; LaTeX namespacing FTW yay.
 % 
 % By the way, https://htmlcolorcodes.com/colors/shades-of-green/ tells
 % us that #4F7942 == "Fern Green".
@@ -243,7 +249,11 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
 % that we might want to revive some day, like \otscaption, \otshref,
 % \iitem, \specialcell, \filespec, and \otsfirstterm.
 \usepackage{xcolor}
-\newcommand{\otsindentednote}[1]{\begin{adjustwidth}{2em}{2em}\textcolor[HTML]{4F7942}{\textit{\textbf{#1}}}\end{adjustwidth}}
+\newcommand{\otsindentednotehtmlcolor}{4F7942}
+\newcommand{\otsindentednote}[1]{\begin{adjustwidth}{2em}{2em}\textcolor[HTML]{\otsindentednotehtmlcolor}{\textit{\textbf{#1}}}\end{adjustwidth}}
+\newenvironment{otsindentednoteenv}
+  {\begin{adjustwidth}{2em}{2em}\itshape\bfseries\color[HTML]{\otsindentednotehtmlcolor}}
+  {\end{adjustwidth}}
 
 % Use one or the other version of this command for citations to other
 % documents.  The \otsciteid variant is for citations involving some
