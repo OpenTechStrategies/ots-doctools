@@ -73,6 +73,45 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
 % for more.
 \usepackage{changepage}
 
+% We use package 'scrextend' for our invoices.  Without the package,
+% LaTeX like this in our invoices...
+%
+%   \begin{small}
+%   \setlength\columnsep{2.5em}
+%   \begin{addmargin}[3em]{0em}
+%   \begin{multicols}{2}
+%     \textit{\underline{ACH:}} \\
+%     \\
+%     Bank: \textbf{Neptune Credit Union} \\
+%     Routing number: \textbf{0123456789} \\
+%     Account number: \textbf{9876543210} \\
+%     Account type: \textbf{Business Checking} \\
+%     Name: \textbf{Our Company Name, LLC}
+%   
+%     \textit{\underline{Check:}}\\
+%     \\
+%     Our Company Name, LLC \\
+%     Attn: Accounts Receivable \\
+%     123 Main Street. \\
+%     Suite 1729 \\
+%     Chicago, IL  60601
+%   \end{multicols}
+%   \end{addmargin}
+%   \end{small}
+% 
+% ...would produce an error like this:
+% 
+%   ! LaTeX Error: Environment addmargin undefined.
+%   
+%   See the LaTeX manual or LaTeX Companion for explanation.
+%   Type  H <return>  for immediate help.
+%    ...                                              
+%                                                     
+%   l.42 \begin{addmargin}
+%                         [3em]{0em}
+%   !  ==> Fatal error occurred, no output PDF file produced!
+\usepackage{scrextend}
+
 % See "An Acronym Environment for LaTeX 2e", by Tobias Oetiker:
 % http://ctan.mirrors.hoobly.com/macros/latex/contrib/acronym/acronym.pdf
 % 
