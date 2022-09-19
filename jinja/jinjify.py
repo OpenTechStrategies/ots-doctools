@@ -36,6 +36,9 @@ for r in regex:
 def run_p(text, meta):
     return meta.get('legacy', '') != "legacy"
 
+def slurp_lines(fspec):
+    with open(fspec) as fh:
+        return fh.read().split("\n")
 
 # We're not using this func right now, but I do want to add markdown
 # support back in later, once I've figure out how to fit it in
@@ -49,6 +52,36 @@ def md2tex(string):
                          stderr=subprocess.PIPE
     )
     return p.communicate(input=string.encode('UTF-8'))[0].decode('UTF-8')
+
+class TodoManager():
+    def __init__(self, fname="todo.txt"):
+        self.fname = fname
+        if os.path.exists(fname):
+            self.lines = slurp_lines(fname)
+        else:
+            self.lines = []
+
+        # We'll compare against this later to see if our lines changed
+        self.new_lines = []
+
+    def latex(self):
+        if not self.lines:
+            return "No todos"
+        ret = (r"\notocsection{{\color{red} TODOS}}"
+               + "\\begin{itemize}\n\\item "
+               + "\n\\item ".join(self.lines)
+               + "\n\\end{itemize}")
+        return ret
+
+    def write(self):
+        """Write our new todo lines, return True if they've changed"""
+        if "\n".join(self.lines) != "\n".join(self.new_lines):
+            self.lines = self.new_lines
+            with open(self.fname, 'w') as fh:
+                fh.write("\n".join(self.new_lines))
+                fh.write("\n")
+            return True
+        return False
 
 def run(text, meta):
     """Apply jinja templates to TEXT, using metadata from dict META.
@@ -75,10 +108,24 @@ def run(text, meta):
 
     template = latex_jinja_env.get_template('jinjify_me.ltx')
 
-    # Quick example of calling a python func from our template. Evoke with
-    # \VAR{testfunc()}
-    #def testfunc():
-    #    return u'TEST'
-    #template.globals.update(testfunc=testfunc)
+    tman = TodoManager()
+    def todo(text):
+        """Record a todo and return approprate latex to display the todo.
 
-    return template.render(**meta), meta
+        Evoke with \VAR{todo()}"""
+
+        tman.new_lines.append(text.replace("\n"," "))
+        return f'\\textbf{{TODO}}: {text}'
+    template.globals.update(todo=todo) # register jinja hook for todo func
+
+
+    # Render repeatedly until we no longer need to rerender
+    rejinjify = False
+    while True:
+        template.globals.update(todos = tman.latex())
+        rendered = template.render(**meta)
+        rejinjify = tman.write()
+        if not rejinjify:
+            break
+
+    return rendered, meta
