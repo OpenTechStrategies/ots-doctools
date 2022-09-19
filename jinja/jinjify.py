@@ -86,8 +86,16 @@ class TodoManager():
             return True
         return False
 
+def latexify(text):
+    """Transform text into something that won't break latex.
+
+    This is a somewhat naive function."""
+
+    text = text.replace("_", r"\_")
+    return text
+
 def url(text):
-    return(r"\otsurl{" + text.replace("/", r"\/") + "}")
+    return(r"\otsurl{" + latexify(text) + "}")
 
 def run(text, meta):
     """Apply jinja templates to TEXT, using metadata from dict META.
