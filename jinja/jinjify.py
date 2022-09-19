@@ -36,9 +36,12 @@ for r in regex:
 def run_p(text, meta):
     return meta.get('legacy', '') != "legacy"
 
+def after_p(text, meta):
+    return True
+
 def slurp_lines(fspec):
     with open(fspec) as fh:
-        return fh.read().split("\n")
+        return fh.read().strip().split("\n")
 
 # We're not using this func right now, but I do want to add markdown
 # support back in later, once I've figure out how to fit it in
@@ -129,3 +132,10 @@ def run(text, meta):
             break
 
     return rendered, meta
+
+def after(pdf_fname, meta):
+    tman = TodoManager()
+    meta['todos'] = tman.lines
+    meta['build_strings'] = meta.get('build_strings', [])
+    meta['build_strings'].append('todos')
+    return meta
