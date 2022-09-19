@@ -1,11 +1,11 @@
 % OTS Latex package
-% 
+%
 % Copyright 2016 Open Tech Strategies
 %
 %% This program can be redistributed and/or modified under the terms
 %% of the LaTeX Project Public License Distributed from CTAN archives
 %% in directory macros/latex/base/lppl.txt.
-% 
+%
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
 \ProvidesPackage{ots}
   [2016/09/01 v0.01 LaTeX package for consistent OTS docs]
@@ -19,7 +19,7 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
 % find visually than they are with regular bullet points, and had some
 % branding concerns about it as well: basically, worried that it might
 % strike clients as a little too pushy.  Up for discussion, of course.
-% 
+%
 % \renewcommand{\labelitemi}{\otslogoicon}
 \renewcommand{\footnoterule}{\textcolor{dkgreen}{\rule{\textwidth}{0.9pt}}\vspace*{0.6ex}}
 
@@ -45,7 +45,7 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
 %
 % You can also use this for things like double-spacing a document, etc.
 % More information at https://latex.org/forum/viewtopic.php?t=4628 and
-% https://ctan.org/pkg/setspace and especially the "Usage:" section of 
+% https://ctan.org/pkg/setspace and especially the "Usage:" section of
 % http://tug.ctan.org/tex-archive/macros/latex/contrib/setspace/setspace.sty.
 \usepackage{setspace}
 
@@ -59,14 +59,14 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
 % to the left-side margin.
 %
 % An alternative would be to do this in the preamble...
-% 
+%
 %   \def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
-%   \let\endchangemargin=\endlist 
-%   
+%   \let\endchangemargin=\endlist
+%
 % ...and then in the text:
-%   
-%   \begin{changemargin}{<arg>}{<arg>} 
-%   \end{changemargin} 
+%
+%   \begin{changemargin}{<arg>}{<arg>}
+%   \end{changemargin}
 %
 % See https://tex.stackexchange.com/questions/588/\
 % how-can-i-change-the-margins-for-only-part-of-the-text
@@ -87,7 +87,7 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
 %     Account number: \textbf{9876543210} \\
 %     Account type: \textbf{Business Checking} \\
 %     Name: \textbf{Our Company Name, LLC}
-%   
+%
 %     \textit{\underline{Check:}}\\
 %     \\
 %     Our Company Name, LLC \\
@@ -98,15 +98,15 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
 %   \end{multicols}
 %   \end{addmargin}
 %   \end{small}
-% 
+%
 % ...would produce an error like this:
-% 
+%
 %   ! LaTeX Error: Environment addmargin undefined.
-%   
+%
 %   See the LaTeX manual or LaTeX Companion for explanation.
 %   Type  H <return>  for immediate help.
-%    ...                                              
-%                                                     
+%    ...
+%
 %   l.42 \begin{addmargin}
 %                         [3em]{0em}
 %   !  ==> Fatal error occurred, no output PDF file produced!
@@ -114,12 +114,12 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
 
 % See "An Acronym Environment for LaTeX 2e", by Tobias Oetiker:
 % http://ctan.mirrors.hoobly.com/macros/latex/contrib/acronym/acronym.pdf
-% 
+%
 % Acronyms should be expanded on first use, but not after.
 %
 % Research note:
 % --------------
-% 
+%
 % In case you're wondering why the "acronym" package versus, say, the
 % "acro" package, % which is very similar, it happens that Karl went
 % down this research road (because reasons, yak-shaving, etc) and
@@ -139,7 +139,7 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
 %   > \pkg{nomencl}~\cite{pkg:nomencl}, and of course the mighty
 %   > \pkg{glossaries}~\cite{pkg:glossaries}. So there is really no
 %   > \emph{need} for a new package.
-%   > 
+%   >
 %   > On the other hand \pkg{acronym}, the best of the acronym specific
 %   > packages, has one or two shortcomings and sometimes using
 %   > \pkg{glossaries} seems a bit of an overkill (or simply inconvenient as
@@ -147,17 +147,17 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
 %   > \code{xindy}, then\footnote{Rumour has it there is going to be a
 %   > version that can be used without running an external program}). So
 %   > \acro\ stands somewhere in between (but closer to \pkg{acronym}).
-%   > 
+%   >
 %   > The main reason for the existance of \acro\ is a question on
 %   > \acs{tex.sx}
 %   > \footnote{\url{http://tex.stackexchange.com/q/59449/5049}} which
 %   > intrigued me and in consequence led to \acro\ and it's option
 %   > \option{single}.
-%   > 
+%   >
 %   > \acro\ has many similarities with the \pkg{acronym} package.  In fact,
 %   > quite some macros have the same name and meaning\footnote{\emph{Not}
 %   > in the sense of \cs*{meaning}!}.
-%   > 
+%   >
 %   > Please take a minute to think and decide which package will suit your
 %   > needs best.  Are you planning to add a glossary to your book?  You
 %   > should probably go with \pkg{glossaries}, then.  Are you planning to
@@ -189,7 +189,7 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
   \tl_use:N \l_marian_input_text_tl
  }
 \ExplSyntaxOff
-\usepackage{xspace} 
+\usepackage{xspace}
 
 % This allows urls to linebreak in footnotes.  It uses the above replace routine.
 \newcommand{\otsurl}[1]{%
@@ -198,7 +198,7 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
 \newcommand{\filespec}[1]{%
   \textit{\href{}{\replace{#1}{/}{/\allowbreak }}}\xspace}
 
-% Use this to refer to a [sub[sub]]section from elsewhere, 
+% Use this to refer to a [sub[sub]]section from elsewhere,
 % assuming you want to include both its number and its name.
 \newcommand{\fullref}[1]{%
   \ref{#1}~``\nameref{#1}''}
@@ -243,18 +243,18 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
 %
 % But what if you want to refer to specific list items by label,
 % that is, using references instead of just hardcoding numbers?
-% 
+%
 % Setting up the labels is the easy part:
-% 
+%
 %   \begin{enumerate}[label=\arabic*)]
 %     \item\label{fish} This is item one, internally labeled "fish".
 %     \item\label{sock} This is item two, internally labeled "sock".
 %   \end{enumerate}
-% 
+%
 % But that means "\ref{sock}" will produce "2)" instead of "(2)".  You
 % could write "(\ref{sock}", but I trust I don't need to explain why
 % that's not a pleasant thing to see in one's LaTeX source.
-% 
+%
 % Hence this new command.  The single left paren is still there, but
 % at least it's isolated to the command definition so you won't see it
 % when working with the LaTeX source text.
@@ -267,7 +267,7 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
 % because sometimes you want to drop a brief note into the doc and
 % sometimes you want to write multi-paragraph note.  Sorry about the
 % "env" suffix on the environment name; LaTeX namespacing FTW yay.
-% 
+%
 % By the way, https://htmlcolorcodes.com/colors/shades-of-green/ tells
 % us that #4F7942 == "Fern Green".
 %
@@ -280,7 +280,7 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
 %   $ find . -name "*.ltx" -print
 %
 % The LaTeX commands in question are:
-% 
+%
 %   - \vtbd    (in psm-approaches.ltx and psc-gap-analysis.ltx)
 %   - \otswarn (in psm-approaches.ltx)
 %
