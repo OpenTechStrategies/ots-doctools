@@ -38,7 +38,7 @@ def after(pdf_fname, meta):
     get_rev = os.path.join(ots_doctools_dir, "get_revision")
     out['ots_svn'] = subprocess.check_output(get_rev, shell=True).decode("utf-8").strip()
     out['doctools_git_id'] = subprocess.check_output(
-        r"cd %s; git log -n 1 | head -n 1 | sed -re 's/(commit [0-9a-f]*) .*/\1/'" % ots_doctools_dir,        
+        r"cd %s; git log -n 1 | head -n 1 | sed -re 's/(commit [0-9a-f]*) .*/\1/'" % ots_doctools_dir,
         shell=True).decode("utf-8").strip()
     out['doctools_git_branch'] = subprocess.check_output(
         r"cd %s; git branch | grep '\*'" % ots_doctools_dir,
@@ -48,7 +48,7 @@ def after(pdf_fname, meta):
     for s in saved:
         out[s] = meta[s]
 
-    ## munge vars, wherever they come from    
+    ## munge vars, wherever they come from
     out['client'] = meta.get('client', "")
     if out['client'].startswith(r"\ac{"):
         out['client'] = out['client'][4:-1]
@@ -56,6 +56,8 @@ def after(pdf_fname, meta):
     out['title'] = meta.get('title', "").replace(r'\\', "\n")
     out['draft'] = meta.get('draft', False)
     out['input_filename'] = meta.get('input_filename', "")
+    if 'todos' in meta:
+        out['todos'] = meta['todos']
     if os.path.exists(out['input_filename']):
         out['input_filename'] = os.path.abspath(out['input_filename'])
 
@@ -83,7 +85,7 @@ def after(pdf_fname, meta):
     pp.pprint(extract_ots_yaml(pdf_fname))
 
     return meta
-    
+
 def extract_ots_yaml(pdf_fname):
     pdf = bslurp(pdf_fname)
     stoken = b"%%% BEGIN OTS YAML BLOCK %%%\n"
@@ -102,4 +104,3 @@ def extract_ots_yaml(pdf_fname):
 
     # Parse the decoded text as yaml and return
     return load(comment_block)
-    
