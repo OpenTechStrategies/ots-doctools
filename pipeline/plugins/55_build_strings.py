@@ -29,7 +29,7 @@ def bslurp(fname):
 
 def after(pdf_fname, meta):
     pdf = bslurp(pdf_fname)
-    saved = meta.get('build_stringss', [])
+    saved = meta.get('build_strings', [])
 
     ## Go through saved vars and default vars, saving some and munging
     ## as needed.
@@ -44,9 +44,10 @@ def after(pdf_fname, meta):
         r"cd %s; git branch | grep '\*'" % ots_doctools_dir,
         shell=True).decode("utf-8")[1:].strip()
 
-    ## grab the indicated vars
+    ## grab the indicated vars, if they exist
     for s in saved:
-        out[s] = meta[s]
+        if s in meta:
+            out[s] = meta[s]
 
     ## munge vars, wherever they come from
     out['client'] = meta.get('client', "")
@@ -56,8 +57,6 @@ def after(pdf_fname, meta):
     out['title'] = meta.get('title', "").replace(r'\\', "\n")
     out['draft'] = meta.get('draft', False)
     out['input_filename'] = meta.get('input_filename', "")
-    if 'todos' in meta:
-        out['todos'] = meta['todos']
     if os.path.exists(out['input_filename']):
         out['input_filename'] = os.path.abspath(out['input_filename'])
 
