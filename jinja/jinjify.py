@@ -86,6 +86,9 @@ class TodoManager():
             return True
         return False
 
+def url(text):
+    return(r"\otsurl{" + text.replace("/", r"\/") + "}")
+
 def run(text, meta):
     """Apply jinja templates to TEXT, using metadata from dict META.
     Returns rendered text and unchanged META."""
@@ -120,6 +123,7 @@ def run(text, meta):
         tman.new_lines.append(text.replace("\n"," "))
         return f'\\textbf{{TODO}}: {text}'
     template.globals.update(todo=todo) # register jinja hook for todo func
+    template.globals.update(url=url) # register jinja hook for todo func
 
 
     # Render repeatedly until we no longer need to rerender
