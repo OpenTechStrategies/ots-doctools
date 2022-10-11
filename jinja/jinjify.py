@@ -69,7 +69,7 @@ class TodoManager():
 
     def latex(self):
         if not self.lines:
-            return "No todos"
+            return ""
         ret = (r"\notocsection{{\color{red} TODOS}}"
                + "\\begin{itemize}\n\\item "
                + "\n\\item ".join(self.lines)
