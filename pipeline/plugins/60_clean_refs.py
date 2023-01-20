@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
 
-"""This plugin removes refs from the output so we can ref and deref
-without it showing in the final doc.
+"""Remove refs (see below) from the output if YAML vars say to do so.
+This is so we can ref and deref without it showing in the final doc.
 
-By default, we remove ref:[0-9a-f]+ with surrounding parentheses and
-brackets.  You can set ref_regex in the YAML head of the doc to
-override.
+In the YAML head of the doc, you must set 'remove-refs' to TRUE to
+have refs removed.  By default, we remove "ref:[0-9a-f]+" and any
+surrounding parentheses and brackets.  However, if you also set
+'ref-regex' to some regular expression string, that regex is used
+instead of the default.
 
-The reference system this plugin works with is oref, which is
-available in ots-tools at
-https://github.com/OpenTechStrategies/ots-tools/blob/master/emacs-tools/oref.el
+The reference system this plugin works with is 'oref', available here:
+https://code.librehq.com/ots/ots-tools/-/blob/main/emacs-tools/oref.el
 
 """
+
 import os
 import re
 
@@ -19,11 +21,17 @@ def run_p(text, meta):
     return meta.get('cleanrefs', True) != False
 
 def run(text, meta):
-    """Remove refs from the text.
-
+    """Remove refs from the text if META["remove-refs"] is True.
+    If META["ref-regex"] is also present, use that regular expression
+    to match refs instead of the default regular expression.
     Returns text with a regex substitution and unchanged META."""
 
-    pat = re.compile(meta.get("ref_regex", "[[(]*ref:[0-9a-f]+[])]*"))
-    text = pat.sub("", text)
+    if meta.get("remove-refs", None) is True:
+        custom_re = meta.get("ref-regex", None)
+        if custom_re is not None:
+            pat = re.compile(custom_re)
+        else:
+            pat = re.compile("[[(]*ref:[0-9a-f]+[])]*")
+        text = pat.sub("", text)
     
     return text, meta
