@@ -38,12 +38,79 @@
 \usepackage{multicol}  % We use this for the Contact Information section
 
 % Set up the bibliography style
-\usepackage[backend=biber,style=authortitle]{biblatex}  %backend=biber is 'better'
-\addbibresource{bibliography.bib}
-\setlength\bibitemsep{0.5\baselineskip}
-\setlength\bibnamesep{0.5\baselineskip}
-\setlength\bibinitsep{0.5\baselineskip}
-
+% 
+% 2023-02-03: Actually, for now, don't set up the bibliography style,
+% because somehow including it breaks our doc builds.  As Karl said in
+% https://chat.opentechstrategies.com/#narrow/stream/2-general/topic/ots-doctools/near/154687
+%
+%   > Urgk, WTF, suddenly I can't build a doc (that is at the moment
+%   > an exact copy of a .ltx doc that has built fine in the past):
+%   > 
+%   >   $ make laser-sharks-support-renewal-20230510-20240510.pdf
+%   >   
+%   >   [...]
+%   >   
+%   >   Output written on laser-sharks-support-renewal-20230510-20240510.pdf (8 pages, 19
+%   >   6071 bytes).
+%   >   Transcript written on laser-sharks-support-renewal-20230510-20240510.log.
+%   >   Latexmk: Getting log file 'laser-sharks-support-renewal-20230510-20240510.log'
+%   >   Latexmk: Examining 'laser-sharks-support-renewal-20230510-20240510.fls'
+%   >   Latexmk: Examining 'laser-sharks-support-renewal-20230510-20240510.log'
+%   >   Latexmk: Missing bbl file 'laser-sharks-support-renewal-20230510-20240510.bbl' in following:
+%   >    No file laser-sharks-support-renewal-20230510-20240510.bbl.
+%   >   Latexmk: Log file says output to 'laser-sharks-support-renewal-20230510-20240510.pdf'
+%   >   Latexmk: Bibliography file(s) form .bcf file:
+%   >     bibliography.bib
+%   >   Bib file(s) not found in search path:
+%   >     bibliography.bib
+%   >   Latexmk: applying rule 'biber laser-sharks-support-renewal-20230510-20240510'...
+%   >   Rule 'biber laser-sharks-support-renewal-20230510-20240510':  Reasons for rerun
+%   >   Category 'no_dest':
+%   >     biber laser-sharks-support-renewal-20230510-20240510
+%   >   
+%   >   Latexmk: I WON'T RUN 'biber laser-sharks-support-renewal-20230510-20240510' because I don't find the following files:
+%   >     bibliography.bib
+%   >   Latexmk: applying rule 'biber laser-sharks-support-renewal-20230510-20240510'...
+%   >   Rule 'biber laser-sharks-support-renewal-20230510-20240510':  Reasons for rerun
+%   >   Category 'no_dest':
+%   >     biber laser-sharks-support-renewal-20230510-20240510
+%   >   
+%   >   Latexmk: I WON'T RUN 'biber laser-sharks-support-renewal-20230510-20240510' because I don't find the following files:
+%   >     bibliography.bib
+%   >   Latexmk: applying rule 'biber laser-sharks-support-renewal-20230510-20240510'...
+%   >   Rule 'biber laser-sharks-support-renewal-20230510-20240510':  Reasons for rerun
+%   >   Category 'no_dest':
+%   >     biber laser-sharks-support-renewal-20230510-20240510
+%   >   
+%   >   Latexmk: I WON'T RUN 'biber laser-sharks-support-renewal-20230510-20240510' because I don't find the following files:
+%   >     bibliography.bib
+%   >   Latexmk: applying rule 'biber laser-sharks-support-renewal-20230510-20240510'...
+%   >   Rule 'biber laser-sharks-support-renewal-20230510-20240510':  Reasons for rerun
+%   >   Category 'no_dest':
+%   >     biber laser-sharks-support-renewal-20230510-20240510
+%   >   
+%   >   Latexmk: Maximum runs of biber laser-sharks-support-renewal-20230510-20240510 reached without getting stable files
+%   >   Latexmk: All targets () are up-to-date
+%   >   ----------------------
+%   >   This message may duplicate earlier message.
+%   >   Latexmk: Failure in processing file 'laser-sharks-support-renewal-20230510-20240510.tex':
+%   >      'biber laser-sharks-support-renewal-20230510-20240510' needed too many passes
+%   >   ----------------------
+%   >   
+%   >   Latexmk: If appropriate, the -f option can be used to get latexmk
+%   >     to try to force complete processing.
+%   >   make[1]: *** [/home/kfogel/private/work/ots/r/ots-doctools/Makefile:81: laser-sharks-support-renewal-20230510-20240510.pdf] Error 12
+%   >   make: *** [Makefile:23: laser-sharks-support-renewal-20230510-20240510.pdf] Error 2
+%   >   $
+%
+% For now, I'm just commenting out everything to do with bib.  If we
+% need bib for some doc, well, then we'll need to fix this then.
+%
+% % \usepackage[backend=biber,style=authortitle]{biblatex}  %backend=biber is 'better'
+% % \addbibresource{bibliography.bib}
+% % \setlength\bibitemsep{0.5\baselineskip}
+% % \setlength\bibnamesep{0.5\baselineskip}
+% % \setlength\bibinitsep{0.5\baselineskip}
 
 % For logo and accompanying contact info.
 \usepackage{graphicx}
