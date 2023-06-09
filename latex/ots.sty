@@ -252,10 +252,11 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
 % could write "(\ref{sock}", but I trust I don't need to explain why
 % that's not a pleasant thing to see in one's LaTeX source.
 %
-% Hence this new command.  The single left paren is still there, but
+% Hence these new commands.  The single left paren is still there, but
 % at least it's isolated to the command definition so you won't see it
 % when working with the LaTeX source text.
 \newcommand{\otsparenref}[1]{(\ref{#1}}
+\newcommand{\otsparenfullref}[1]{\otsparenref{#1}~``\nameref{#1}''}
 
 % Create an indented, italicized, parenthesized green note.
 %
