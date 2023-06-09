@@ -213,7 +213,7 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
 
 % Use this for including source references that you don't want to
 % include in the output, for example the unique codes used by
-% `ots-set-ref' and `ots-find-ref' from ${OTS_DIR}/utils/ots.el.
+% `oref-set-ref' and `oref-find-ref' from oref.el in ots-tools.
 %
 % This is just to quickly preserve traceability while writing; later,
 % we might convert some of these references to reader-visible form,
@@ -223,10 +223,7 @@ trim=0cm 11cm 19.3cm 11cm, scale=0.09]{otslogo.pdf}}}
 % None of that is handled by this command.  All this command does is
 % enable us to keep track of where a piece of information came from,
 % with a minimum of interference to the flow of writing process.
-%
-% (See also the setting of `ots-ref-root' at the bottom of the .ltx
-% file under "Local Variables", which makes `ots-find-ref' work here.)
-\newcommand{\otsref}[1]{}
+\newcommand{\otsoref}[1]{}
 
 % I love this so much.  Here's what's going on:
 %
