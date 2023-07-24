@@ -98,6 +98,25 @@ def tuple2dict(tup):
     return ret
 
 
+class OTSFrontmatterError(Exception):
+    """Error reading a document's frontmatter."""
+    def __init__(self, doc_name):
+        self.doc_name = doc_name
+    def __str__(self):
+        return f"""ERROR: problem reading frontmatter
+
+        In '{self.doc_name}':
+
+        This error usually comes from an unterminated string constant,
+        e.g., something like:
+
+        ---
+        title: "Effects of Forgetting a Closing Double-Quote
+        date: 24 July 2023
+        draft: false
+        ---\n"""
+
+
 @click.command()
 @click.argument('filename')
 @click.option('--output', help="output filename")
@@ -113,7 +132,10 @@ def tuple2dict(tup):
     help='Variables and their values.')
 def cli(filename, output, option, plugin):
     pdf_fname = os.path.splitext(filename)[0] + '.pdf'
-    doc = frontmatter.load(filename)
+    try:
+        doc = frontmatter.load(filename)
+    except Exception:
+        raise OTSFrontmatterError(filename)
     text = doc.content
     meta = doc.metadata
     if meta == {}:
