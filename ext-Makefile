@@ -2,7 +2,7 @@
 
 ### The upstream master version of this Makefile lives here:
 ### 
-### https://github.com/OpenTechStrategies/ots-doctools/blob/master/ext-Makefile
+### https://code.librehq.com/ots/ots-doctools/-/blob/main/ext-Makefile
 ### 
 ### A copy of this Makefile will often be included in a document
 ### source tree, because for people who build documents, it's very
