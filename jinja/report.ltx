@@ -1,0 +1,72 @@
+%% extends "base.ltx"
+
+\BLOCK{block letterhead}
+%% include 'otsletterhead2.ltx'
+\BLOCK{endblock}
+
+\BLOCK{block body}
+Override this block to put the body text in.
+\BLOCK{endblock} %# end body block
+
+
+\#{% We're starting to develop formatting based on type of content, so
+  % we want to be able to do things like mark a key recommendation.
+  % We'll use this macro.  Maybe later we can start to do auto
+  % generation of a summary of recommendations (with links back to
+  % text, etc.)}
+\BLOCK{ macro key_recommendation(text) }
+\begin{center}
+  \noindent\fcolorbox{dkgreen}{lightgray}{%
+    \begin{minipage}[c]{0.85\textwidth}
+  \vspace{0.5em}
+  \includesvg[height=1em]{noun_Key_1785639_ltgreen.svg} \textbf{Key Recommendation:} \VAR{text}
+  \vspace{0.25em}
+\end{minipage}}%
+\end{center}
+\BLOCK{ endmacro}
+
+\BLOCK{ macro further_reading(text) }
+\setlength{\intextsep}{0.8em}%
+\vspace*{0.75em}
+\noindent\makebox[\textwidth][c]{%
+  \noindent\fcolorbox{dkgreen}{lightgray}{%
+    \begin{minipage}[c]{0.85\textwidth}
+  \vspace{0.9em}
+\begin{wrapfigure}{lb}{0.2in}
+  \vspace{-1.37em}\includesvg[height=2em]{noun_Book_861143_ltgreen.svg}~~
+\end{wrapfigure}
+\textbf{Further Reading:} \VAR{text}
+\vspace{0.25em}
+\end{minipage}}}%
+\vspace*{0.25em}
+\BLOCK{ endmacro}
+
+\#{ % This is a rather dumb macro, but I would like to evolve this to
+    % automatically make a table of noun project icons used in a
+    % doc. }
+  \BLOCK{ macro foss_thanks() } This document is built on open source
+  tools and resources.  It is written using
+  LaTeX\footnote{\otsurl{https://www.latex-project.org}} and contains
+  icons from the Noun
+  Project.\footnote{\otsurl{https://thenounproject.com}} In the spirit
+  of open source attribution, we list the icons and their sources
+  below.
+% The "\\ [ -1.5ex]" adds space after the hline (that's the \\) and
+% then takes some of it away with negative spacing.  Without this, the
+% first icon bumps up against the hline and looks funny.
+\begin{center}
+  \begin{tabular}{ r | l }
+  \multicolumn{1}{c|}{Icon}  &  Noun Project ID \\ \hline \\ [-1.5ex]
+    \includesvg[height=1em]{noun_Key_1785639_ltgreen.svg} &
+    \href{https://thenounproject.com/search/?q=key&i=1785639}{1785639} \\
+
+    \includesvg[height=1em]{noun_Email_3027864_ltgreen.svg} &
+    \href{https://thenounproject.com/search/?q=key&i=3027864}{3027864} \\
+
+    \includesvg[height=1em]{noun_Telephone_2591756_ltgreen.svg} &
+    \href{https://thenounproject.com/search/?q=key&i=2591756}{2591756}
+
+
+  \end{tabular}
+\end{center}
+\BLOCK{ endmacro}
