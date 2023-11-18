@@ -102,7 +102,7 @@ all-redacted:
 # it's one less thing for a user to think about.
 venv:
 	@if ! ${PYBIN} -c "import ${PYTHON_PROVIDES}"; then      \
-	  test -d venv || virtualenv -p python3 venv ;  \
+	  test -d venv || python3 -m venv venv ;  \
 	  venv/bin/pip3 install -r ${OTS_DOCTOOLS_DIR}/requirements.txt; \
 	fi;
 
