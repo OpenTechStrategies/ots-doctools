@@ -40,9 +40,33 @@ watch() {
 }
 
 verify_pdf_links() {
+
+   # If user specified PDFs, verify them and return
+   if [ ! -z "$1" ]; then
+      for fname in "$@"; do
+         verify_links_in_one_pdf "$fname"
+      done
+      return
+   fi
+
+   # Check links for every pdf in dir
+   for fname in *.pdf; do
+      verify_links_in_one_pdf $fname
+   done
+ 
+}
+
+verify_links_in_one_pdf() {
    # Check all the links in a pdf and complain if any of them don't return 200
    # when fetched.
    
+   if [ -z "$1" ]; then
+      echo "Please specify a pdf to check"
+      exit
+   fi
+   
+   echo Verifying links in $1
+
    # Fetch all our links
    links=`pdftk $1 output - uncompress | grep -aPo '/URI *\(\K[^)]*'`
 
