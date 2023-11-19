@@ -22,8 +22,8 @@ dosh_init() {
 SCRIPTNAME=`basename "$0"`
 
 # Call the upstream dosh
-watch(){ \${OTS_DOCTOOLS_DIR}/dosh \${FUNCNAME[0]} \$@; }
-verify_pdf_links(){ \${OTS_DOCTOOLS_DIR}/dosh \${FUNCNAME[0]} \$@; }
+watch(){ \${OTS_DOCTOOLS_DIR}/dosh \${FUNCNAME[0]} "\$@"; }
+verify_pdf_links(){ \${OTS_DOCTOOLS_DIR}/dosh \${FUNCNAME[0]} "\$@"; }
 
 # Insert new target functions here.  See dosh docs at https://github.com/8gears/do
 
