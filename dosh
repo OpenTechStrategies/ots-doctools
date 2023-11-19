@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+# Do - The Simplest Build Tool on Earth.
+# Documentation and examples see https://github.com/8gears/do
+#
+SCRIPTNAME=`basename "$0"`
+BASEDIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/..
+
+dosh_init() {
+   # Write a local dosh for this project directory.
+   #
+   # We don't just want to symlink the upstream project directory because we
+   # want the user in this project dir to be able to add their own targets. So
+   # we're doing a form of manual bash inheritance here.
+   #
+   # It would be neat to automatically check the upstream dosh file and add its
+   # targets here, but that would be more work than it is worth 
+   if [ ! -f dosh ]; then
+      echo "Writing dosh script. Feel free to edit it."
+      cat << EOT > dosh
+#!/usr/bin/env bash
+
+SCRIPTNAME=`basename "$0"`
+
+# Call the upstream dosh
+watch(){ \${OTS_DOCTOOLS_DIR}/dosh \${FUNCNAME[0]} \$@; }
+verify_pdf_links(){ \${OTS_DOCTOOLS_DIR}/dosh \${FUNCNAME[0]} \$@; }
+
+# Insert new target functions here.  See dosh docs at https://github.com/8gears/do
+
+"\$@" # <- execute the task
+[ "\$#" -gt 0 ] || printf "Usage:\n\t./\${SCRIPTNAME} %s\n" "(\$(compgen -A function | grep '^[^_]' | paste -sd '|' -))"
+EOT
+   fi
+   chmod +x dosh
+}
+
+watch() {
+   echo "Running ${FUNCNAME[0]}..."
+   inotify-hookable -f *.ltx -c make
+}
+
+verify_pdf_links() {
+   # Check all the links in a pdf and complain if any of them don't return 200
+   # when fetched.
+   
+   # Fetch all our links
+   links=`pdftk $1 output - uncompress | grep -aPo '/URI *\(\K[^)]*'`
+
+   if [ -z "$links" ]; then
+      echo "Couldn't read links from $1"
+      exit
+   fi
+  
+   while IFS= read -r link; do
+      # Use curl to get the http head (not the body)
+      status=$(curl "$link" -o /dev/null -ILsw '%{http_code}')
+
+      if [ $status != 200 ]; then
+         echo "ERROR: Fetching ${link} returns ${status} and not 200"
+      fi
+   done <<< "$links"
+
+}
+
+"$@" # <- execute the task
+[ "$#" -gt 0 ] || printf "Usage:\n\t./${SCRIPTNAME} %s\n" "($(compgen -A function | grep '^[^_]' | paste -sd '|' -))"

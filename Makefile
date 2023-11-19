@@ -144,5 +144,10 @@ clean: clean_latex
 	@rm -f *.redacted.ltx
 	@rm -f *.knowngood
 
+bin/dosh:
+	mkdir -p bin
+	cd bin; ${OTS_DOCTOOLS_DIR}/dosh dosh_init
+	@echo "You might want to make sure ./bin is on your path (e.g. via .envrc)"
+
 # Don't delete intermediate files
 .SECONDARY:
